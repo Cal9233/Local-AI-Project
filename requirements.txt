@@ -1,0 +1,8 @@
+# External dependencies (stdlib modules are not listed). Add by stage.
+# Model APIs / structured extraction
+ollama==0.6.3
+pydantic==2.14.3
+# PDF ingestion
+pypdf==7.0.1
+# Retrieval
+qdrant-client==1.20.0
