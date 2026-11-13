@@ -1,0 +1,6 @@
+quote_id,supplier,part_number,quantity,condition,unit_price,currency,sale_basis
+Q001,Demo Supplier Alpha,TRAIN-PN-001,2,OH,1250.00,USD,OUTRIGHT
+Q002,Demo Supplier Bravo,TRAIN-PN-001,1,OH,1100.00,USD,OUTRIGHT
+Q003,Demo Supplier Charlie,TRAIN-PN-001,4,SV,850.00,USD,OUTRIGHT
+Q004,Demo Supplier Delta,TRAIN-PN-001,3,OH,700.00,USD,EXCHANGE
+Q005,Demo Supplier Echo,TRAIN-PN-002,5,NE,400.00,EUR,OUTRIGHT
