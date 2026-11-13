@@ -1,12 +1,18 @@
 import csv
 
-pn = input("Enter part number: ")
+def load_quotes(path):
+    with open(path, "r") as file:
+        csv_reader = csv.DictReader(file)
+        data = []
+        for row in csv_reader:
+            data.append(row)
+        return data
 
-with open("./data/sample_quotes.csv", "r") as csv_file:
-    csv_reader = csv.DictReader(csv_file)
+def main():
+    pn = input("Enter part number: ")
+    quotes = load_quotes("./data/sample_quotes.csv")
     found = False
-    value = ''
-    for row in csv_reader:
+    for row in quotes:
         qty = int(row['quantity'])
         availablity = f"{qty} available" if qty > 0 else "None available"
         match = row['part_number']
@@ -16,4 +22,5 @@ with open("./data/sample_quotes.csv", "r") as csv_file:
     if found == False: 
         print(f"No quotes found for {pn}.")
 
-  
+if __name__ == "__main__":
+    main()
