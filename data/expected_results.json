@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "dataset_file": "sample_quotes.csv",
+  "description": "Five fictional quotes for a beginner aviation quote comparison exercise. All suppliers, identifiers, prices, and quantities are invented.",
+  "rules": {
+    "matching": "Use exact, case-sensitive matches for part_number, condition, currency, and sale_basis. All examples use already normalized input.",
+    "quantity": "The CSV quantity is available stock. A quote qualifies when its quantity is greater than or equal to requested_quantity, which is a positive integer.",
+    "fulfillment": "One quote must fulfill the entire request. Do not combine stock across quotes.",
+    "pricing": "Choose the lowest unit_price among eligible quotes. If prices tie, choose the alphabetically first quote_id.",
+    "currency": "Compare only the requested currency. Do not convert currencies.",
+    "sale_basis": "OUTRIGHT and EXCHANGE are separate categories and must match the request exactly.",
+    "condition": "OH, SV, and NE are distinct labels. Do not substitute one for another.",
+    "line_total": "unit_price multiplied by requested_quantity. This is the quoted line amount only; shipping, taxes, core deposits, and other fees are outside this exercise.",
+    "money_format": "Prices and totals in this JSON are decimal strings with two digits after the decimal point. Use decimal arithmetic when calculating money.",
+    "result_order": "Return matching_quote_ids and eligible_quote_ids in their original CSV row order.",
+    "no_match": "Return status no_eligible_quote, an empty eligible_quote_ids list, and null for best_quote_id, unit_price, and line_total.",
+    "scope": "This small set covers basic filtering and comparisons. Missing values, invalid input, duplicates, and expiry dates are later exercises."
+  },
+  "test_cases": [
+    {
+      "id": "T01",
+      "description": "Find every quote for the first part, regardless of condition or sale basis.",
+      "action": "filter_by_part_number",
+      "input": {
+        "part_number": "TRAIN-PN-001"
+      },
+      "expected": {
+        "matching_quote_ids": [
+          "Q001",
+          "Q002",
+          "Q003",
+          "Q004"
+        ]
+      }
+    },
+    {
+      "id": "T02",
+      "description": "Choose the cheaper eligible outright OH quote for one unit.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-001",
+        "requested_quantity": 1,
+        "condition": "OH",
+        "currency": "USD",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "found",
+        "eligible_quote_ids": [
+          "Q001",
+          "Q002"
+        ],
+        "best_quote_id": "Q002",
+        "unit_price": "1100.00",
+        "line_total": "1100.00"
+      },
+      "explanation": "Q002 is cheaper than Q001. Q003 has a different condition and Q004 is an exchange quote."
+    },
+    {
+      "id": "T03",
+      "description": "Reject the cheaper OH outright quote because it only has one unit.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-001",
+        "requested_quantity": 2,
+        "condition": "OH",
+        "currency": "USD",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "found",
+        "eligible_quote_ids": [
+          "Q001"
+        ],
+        "best_quote_id": "Q001",
+        "unit_price": "1250.00",
+        "line_total": "2500.00"
+      },
+      "explanation": "Q001 has exactly two units. Q002 cannot fulfill the requested quantity."
+    },
+    {
+      "id": "T04",
+      "description": "Return no eligible quote when the matching outright OH offers have insufficient stock.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-001",
+        "requested_quantity": 3,
+        "condition": "OH",
+        "currency": "USD",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "no_eligible_quote",
+        "eligible_quote_ids": [],
+        "best_quote_id": null,
+        "unit_price": null,
+        "line_total": null
+      },
+      "explanation": "Q001 has two units and Q002 has one. Their quantities cannot be combined for this exercise. Q003 and Q004 fail other filters."
+    },
+    {
+      "id": "T05",
+      "description": "Find the quote that matches the SV condition.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-001",
+        "requested_quantity": 2,
+        "condition": "SV",
+        "currency": "USD",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "found",
+        "eligible_quote_ids": [
+          "Q003"
+        ],
+        "best_quote_id": "Q003",
+        "unit_price": "850.00",
+        "line_total": "1700.00"
+      },
+      "explanation": "Q003 is the only SV quote for this part."
+    },
+    {
+      "id": "T06",
+      "description": "Find an exchange offer when exchange is explicitly requested.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-001",
+        "requested_quantity": 2,
+        "condition": "OH",
+        "currency": "USD",
+        "sale_basis": "EXCHANGE"
+      },
+      "expected": {
+        "status": "found",
+        "eligible_quote_ids": [
+          "Q004"
+        ],
+        "best_quote_id": "Q004",
+        "unit_price": "700.00",
+        "line_total": "1400.00"
+      },
+      "explanation": "Q004 matches the exchange request. The line total excludes any unprovided core deposit or other fees."
+    },
+    {
+      "id": "T07",
+      "description": "Find the second part in EUR and calculate the line total for three units.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-002",
+        "requested_quantity": 3,
+        "condition": "NE",
+        "currency": "EUR",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "found",
+        "eligible_quote_ids": [
+          "Q005"
+        ],
+        "best_quote_id": "Q005",
+        "unit_price": "400.00",
+        "line_total": "1200.00"
+      },
+      "explanation": "Q005 has five available units and matches all requested fields."
+    },
+    {
+      "id": "T08",
+      "description": "Reject a quote in a different currency.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-002",
+        "requested_quantity": 1,
+        "condition": "NE",
+        "currency": "USD",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "no_eligible_quote",
+        "eligible_quote_ids": [],
+        "best_quote_id": null,
+        "unit_price": null,
+        "line_total": null
+      },
+      "explanation": "Q005 is quoted in EUR. The request requires USD and currency conversion is outside this exercise."
+    },
+    {
+      "id": "T09",
+      "description": "Return no eligible quote for an unknown part number.",
+      "action": "find_cheapest_eligible_quote",
+      "input": {
+        "part_number": "TRAIN-PN-999",
+        "requested_quantity": 1,
+        "condition": "OH",
+        "currency": "USD",
+        "sale_basis": "OUTRIGHT"
+      },
+      "expected": {
+        "status": "no_eligible_quote",
+        "eligible_quote_ids": [],
+        "best_quote_id": null,
+        "unit_price": null,
+        "line_total": null
+      },
+      "explanation": "No row contains this exact part number."
+    },
+    {
+      "id": "T10",
+      "description": "Return an empty list when filtering for an unknown part number.",
+      "action": "filter_by_part_number",
+      "input": {
+        "part_number": "TRAIN-PN-999"
+      },
+      "expected": {
+        "matching_quote_ids": []
+      }
+    }
+  ]
+}
