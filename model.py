@@ -15,7 +15,7 @@ response: ChatResponse = chat(
     messages=[
         {
             'role': 'user',
-            'content': 'Is the sky blue?'
+            'content': 'Return all information related to the part number.'
         }],
     think=True,
     stream=False,
