@@ -11,7 +11,8 @@ class Quote(BaseModel):
     sale_basis: str
 
 response: ChatResponse = chat(
-    model='qwen3.5:9b',
+    # model='qwen3.5:9b', # Linux WorkStation
+    model='qwen/qwen3-14b', # Macbook WorkStation
     messages=[
         {
             'role': 'user',
