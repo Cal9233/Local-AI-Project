@@ -4,14 +4,14 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 2.2 — Structured extraction (Milestone 1 lessons 1.2–1.7 still open; skipped ahead by choice)
+**Current lesson:** 1.2 — Functions that return values (returned from 2.2 on 2026-11-20; 2.2 paused, see Notes)
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
 
 ## Milestone 1 — Business rules in plain Python
 - [x] 1.1 Read your own program — *evidence from brief:* CSV reading with `DictReader`, named fields, int quantity, display, exact part search, found-flag no-match message; manual checks: 4 matches for TRAIN-PN-001, 1 for TRAIN-PN-002, no-match for TRAIN-PN-003. Debugging exercise established loop vs. after-loop meaning of `found == False`.
-- [ ] 1.2 Functions that return values — `main.py` is still a single script.
+- [~] 1.2 Functions that return values — 2026-11-20: `load_quotes(path)` returns a list of row dicts; `main()` handles input/printing behind `if __name__ == "__main__"`. Still to show: call `load_quotes` from a Python shell, CLI unchanged, `pathlib.Path` not yet used.
 - [ ] 1.3 Filter by part number (T01, T10)
 - [ ] 1.4 Eligibility rules — requested-quantity filtering not yet demonstrated.
 - [ ] 1.5 Money and the cheapest offer (T02, T07) — decimal pricing not yet demonstrated.
@@ -20,7 +20,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
 ## Milestone 2 — First model API experiment
 - [x] 2.1 Reach the model service — 2026-11-12: `model.py` sends one chat request to `qwen3.5:9b` via the ollama client to `localhost:11434`; identified `message.content` vs `thinking`, ns durations, token counts (`eval_count` includes thinking). Checkpoint: predicted connection error with server off; explained remote host change (`Client(host=...)`/`OLLAMA_HOST`, bind 0.0.0.0); log `model`, verify content against source.
-- [ ] 2.2 Structured extraction
+- [~] 2.2 Structured extraction — draft `Quote` model in `model.py`; paused 2026-11-20 (no model service on the Mac yet).
 - [ ] 2.3 Failure handling
 - [ ] 2.4 Context and request settings
 
@@ -64,3 +64,4 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 ## Notes
 - Decision 2026-11-12: `model.py` is the brief's `model_practice.py` (first model experiments).
 - Decision 2026-11-12: brief expanded (API service, context/model selection, hosted providers, agents/MCP, Docker/cloud, DeepEval, PostHog, HF/PyTorch/LangChain). Milestones renumbered 5–12; no completed lessons affected.
+- 2026-11-20: Working on a Mac with no Ollama installed (`ollama` not on PATH, nothing on :11434). LM Studio runs `qwen/qwen3-14b` at `localhost:1234` (OpenAI-compatible `/v1/*`). Undecided: install Ollama, use the Linux machine, or switch 2.x to LM Studio.
