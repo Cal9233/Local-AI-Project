@@ -16,6 +16,10 @@ The practical business goal is to reduce the work involved in reviewing quotes w
 
 The completed learning project should also provide evidence of your skills: understandable source code, a repeatable setup, a working demonstration, checked examples, and a record of defects you diagnosed and fixed.
 
+The 24-week study plan adds a career objective: use the project as evidence for Applied AI Engineer, AI Engineer, and LLM Application Engineer roles. That means a demo another person can run, measured results, one failure you can explain, and interview practice in Python, SQL, and system design. [S25]
+
+The study plan schedules the work across 24 weeks at 8 to 10 hours per week, with suggested dates from 2026-11-23 to 2027-05-09. The dates are a pacing guide. A lesson is complete only when its evidence exists.
+
 The AI component will use existing models through APIs. Training a new foundation model is outside the planned learning scope.
 
 ## What you are trying to learn
@@ -31,8 +35,11 @@ The AI component will use existing models through APIs. Training a new foundatio
 | Context and model selection | Instructions, evidence selection, history, token limits, request settings, and cost/quality comparisons | Reproduce an extraction result and explain what context or model choice changed it |
 | Agents and MCP | Tool loops, argument validation, stopping conditions, and standardized tool connections | Complete a bounded quote-research task and expose a lookup through an MCP server |
 | Deployment and cloud | Docker images and containers, configuration, persistent storage, networking, and AWS/GCP basics | Run the same app in a container and explain a deployment on one cloud provider |
-| Operational measurement | Product events, request failures, latency, token usage, budgets, and model routing | Inspect how the app is used and explain its quality, speed, and resource costs |
+| Operational measurement | Product events, request failures, p95 latency, token usage, provider charges, local GPU time, budgets, and model routing | Inspect how the app is used and state what one successful result costs |
+| Release and recovery | Continuous integration, versioned releases, backups, restore, rollback, repeat-safe imports, queues, and concurrency | Tests run before a release; restore a backup and roll back a bad version without losing quotes |
+| Safety and permissions | Keeping document text separate from instructions, read-only tools, tool authorization, and prompt-injection tests | Show a document that asks the app to ignore its task and explain why it gains no permissions |
 | Supporting engineering | Virtual environments, dependency records, Git, readable modules, configuration, and documentation | Another person can understand and reproduce the project |
+| Portfolio and interviews | README, architecture diagram, demo recording, user testing, timed Python and SQL practice, system design, and job-posting analysis | Give a five-minute walkthrough without notes and write a résumé bullet from a real measurement |
 
 For learning, progress is measured by what you can implement and explain yourself. A small feature you understand is a useful milestone.
 
@@ -71,6 +78,9 @@ The latest shared program has not yet demonstrated requested-quantity filtering,
 10. Expose the existing lookup and extraction functions through a documented API.
 11. Demonstrate a bounded agent workflow that combines quote lookup with document search.
 12. Package the application with Docker and demonstrate deployment, useful telemetry, and cost controls.
+13. Run its tests automatically before a release, and recover from a bad release or a repeated import without losing or duplicating stored quotes.
+14. Treat supplier document text as evidence only. A document cannot change the task or the tool permissions.
+15. Send missing or conflicting critical fields to human review, with the supporting phrase from the source.
 
 Direct Hugging Face/PyTorch experiments and a LangChain comparison are additional learning modules. They provide experience with the wider ecosystem alongside the main application.
 
@@ -111,6 +121,8 @@ Ollama provides structured-output and tool-calling interfaces. A JSON schema des
 | Chat/instruction model | Extract quote fields and use supported tools | Model stage |
 | Embedding model | Support semantic document search | Retrieval stage |
 | Qdrant local mode | Practice vector search with a local index | Retrieval stage |
+| Keyword search baseline | Give embedding search a simple comparison point, written in plain Python | Retrieval stage, before Qdrant |
+| curl | Send one HTTP request from the terminal and read the raw response | API stage, alongside HTTPX |
 | Git | Record changes and practice reviewing differences | Alongside development |
 | Your editor and terminal | Write, run, inspect, and debug the application | Throughout |
 
@@ -152,6 +164,41 @@ The first cloud exercise should deploy the application with an explicitly chosen
 
 DeepEval adds model-output measurements alongside your exact field and business-rule checks. Configure the evaluator and record its model, settings, and request costs. Model-based scores complement checked examples and human review. PostHog records how the application is used; that usage information serves a different purpose from an accuracy test. [S21, S22]
 
+## Additions from the 24-week study plan
+
+The 24-week study plan follows the same video and article and adds a calendar and aviation exercises. [S25] Most of its technologies were already in this brief. The table below lists the tools, techniques, and practices that were missing. Week numbers refer to the calendar later in this brief.
+
+Like the modules above, these are planned. Nothing here is marked as installed or completed.
+
+| Topic or technology | What to learn | Quote-assistant exercise and timing |
+| --- | --- | --- |
+| curl | Sending a request from the terminal; reading the method, URL, headers, body, and status code | Call the quote API with curl and with HTTPX; show a valid winner, an empty search, and a rejected quantity (week 4) |
+| Other model tasks | Summarization, translation, and action-item extraction using the same context design | Summarize one fictional email in three sentences, then check its figures against the source (week 5) |
+| Evidence per field and human review | Saving the supporting phrase for each extracted field; sending missing or conflicting values to a person | Store the source phrase beside each field; add examples with two line items, an omitted field, and a core charge separate from unit price (week 6) |
+| Held-out model comparison | Per-field exact matches, unknowns, latency, and cost or local runtime on examples the prompts never saw | Compare two extraction models on 20 held-out fictional emails and explain one wrong answer (week 8) |
+| Keyword search baseline | Term matching as a comparison point; cosine similarity and top-k search for the embedding side | Build a keyword search first, then compare it with embedding search in Qdrant on the same return-clause questions (week 10) |
+| Repeat-safe imports | Why running an import twice must store each record once | Rerun the quote import and the document import; show no duplicate quotes or passages (weeks 3, 9, and 19) |
+| Retrieval test set | Labeled answerable and unanswerable questions, top-three hits, supported citations, declined questions, and repeat-run consistency | Label ten answerable questions and two with no answer; ask each three times; compare the counts with a human review (week 12) |
+| Fixed workflow versus agent | Comparing correctness, tool calls, latency, and ease of debugging | Run the same cases through a lookup-then-search flow and the bounded agent; choose one to ship and justify it with results (week 16) |
+| Prompt-injection testing | Keeping document text separate from instructions and tool permissions | Add a fictional document that asks the app to ignore its task; show that the tools and limits stay the same (week 16) |
+| MCP permissions sketch (GitHub, Slack) | What access a pull-request tool or a Slack notification would need | Optional: sketch the video's GitHub pull request and Slack notification and list the permissions each needs; no build required (week 15) [S30] |
+| AWS services | EC2 compute, IAM permissions, network access, persistent disk, object storage, logs, and AWS Budgets | Use AWS first: set a budget alert, deploy one instance with persistent SQLite and authenticated access, then remove the demo resources (week 18) [S31, S32] |
+| GitHub Actions | Continuous integration: running the tests automatically for each change | Run the `unittest` suite before a release (week 19) [S33] |
+| Releases, backups, and rollback | Versioned releases, backup and restore, and rolling back a bad version | Restore from a backup, roll back a bad version, and retest one quote; the quotes must survive (week 19) |
+| Queues and concurrency | Why simultaneous requests need ordering when one GPU serves them | Sketch how a queue protects a single GPU; build it only if measurements call for it (week 19) |
+| Amplitude | Product analytics; an alternative to PostHog | Choose PostHog or Amplitude, not both; keep raw quote text out of analytics (week 20) [S34, S35] |
+| Operational metrics | Errors, p95 latency, tokens, provider charges, local GPU time, and cost per successful result | Name the slowest step, report p95 latency, and divide the run's cost by its successful results; meter local GPU time separately (week 20) |
+| User testing | Defining success in business terms; manual review versus assisted review | Have a broker or peer review the same batch of fictional quotes both ways; report sample size, time, and accuracy even if the app is slower (week 21) |
+| Portfolio packaging | README, architecture diagram, setup, limitations, and a demo recording | Record a three-minute demo with one success and one failure; have a second person follow the setup; publish only fictional data (week 22) |
+| Interview practice | Python lists, dictionaries, sets, runtime complexity, SQL joins, and system design | Timed SQL join, Python debugging task, and a mock design interview on ten simultaneous uploads or a model swap (week 23) |
+| Job search | Reading postings, matching each required skill to a piece of your work, and networking | Compare postings for three role titles; share a build result on LinkedIn; attend a meetup; submit tailored applications (week 24) |
+
+curl and GitHub Actions are not Python packages. curl runs from the terminal, and GitHub Actions runs in the GitHub repository from a workflow file. Amplitude needs a package only if you choose it instead of PostHog.
+
+The study plan names AWS as the first hands-on provider and Google Cloud as the conceptual comparison. Set the budget alert before creating any resource, and practice removing the demo resources afterward.
+
+The plan lists study resources for each stage: the Python 3.12 tutorial, SQLBolt, the FastAPI tutorial, the Ollama quickstart, the hosted-provider quickstarts, the DeepEval quickstart, and Anthropic's article on workflows and agents. [S26-S30, S36, S37] The video's capstone repository and the DataCamp tracks and certification are optional. [S38, S39]
+
 ## Python modules already available
 
 These standard-library modules are included with Python; import them when needed. [S1]
@@ -190,8 +237,9 @@ Do not list standard-library modules as external requirements.
 | `mcp` | `mcp` | Implement an MCP server and client experiment | After direct tool calling |
 | `deepeval` | `deepeval` | Organize model-output evaluations and metrics | After a working extraction or RAG baseline |
 | `posthog` | `posthog` | Capture application events and measurements | Working API and deployment stage |
+| `amplitude-analytics` | `amplitude` | Alternative to `posthog` for product analytics | Only if Amplitude is chosen instead of PostHog |
 
-The currently demonstrated CSV and search features use the standard library. Installation of the listed external packages in the Mac project's environment has not been confirmed in the shared terminal output. This table is a staged learning inventory, not a single installation list. Check each module's current requirements when that exercise begins. [S3, S6, S7, S9, S13-S17, S21-S24]
+The currently demonstrated CSV and search features use the standard library. Installation of the listed external packages in the Mac project's environment has not been confirmed in the shared terminal output. This table is a staged learning inventory, not a single installation list. Check each module's current requirements when that exercise begins. [S3, S6, S7, S9, S13-S17, S21-S24, S34]
 
 Add packages as their features are introduced. Inside the activated project environment, the staged installation commands are:
 
@@ -276,8 +324,14 @@ Add independently checked quote-text examples for extraction and question/passag
 | Retrieval success | Whether a known supporting passage is returned among the selected results |
 | Evidence support | Whether answer claims follow from the returned passages |
 | Reliability and speed | Failed requests and elapsed time |
+| Declined questions | Whether questions the documents cannot answer are declined |
+| Consistency | Whether the same question asked three times gives the same answer |
+| Cost | Cost per successful result, with local GPU time metered separately |
+| Usefulness | Time and corrections for a manual review versus an assisted review of the same quotes |
 
 Assess retrieval and generated answers separately so you can locate failures. Start with exact checks for structured fields and manually reviewed examples for answers. Review failures individually and rerun the same cases after changes. [S10]
+
+The study plan sets sizes for the first test sets: 20 held-out fictional emails for the model comparison, and ten answerable plus two unanswerable questions for retrieval. When an answer is wrong, first check whether the correct passage reached the prompt. If it did not, change the search and rerun the same questions. If it did, inspect the answer and citation. Keep the before-and-after counts, including any result that got worse. [S25]
 
 ## Files to grow toward
 
@@ -307,6 +361,7 @@ This is a guide to add files as responsibilities emerge, rather than an instruct
 | `Dockerfile` and `.dockerignore` | Later container build and build-context exclusions |
 | `docs/DEPLOYMENT.md` | Later run, configuration, storage, health-check, and rollback instructions |
 | `docs/MODEL_COMPARISON.md` | Inputs, model settings, quality measurements, latency, and usage comparisons |
+| `.github/workflows/` | Later GitHub Actions workflow that runs the tests before a release |
 | `.gitignore` | Exclude the environment and generated local data from Git |
 
 As the program grows, move repeated logic into functions that return values. This makes the same rules usable from the command line, tests, and model tools.
@@ -317,16 +372,43 @@ As the program grows, move repeated logic into functions that return values. Thi
 2. Begin the separate first model API experiment now, alongside Python practice. Verify the endpoint and learn context engineering, request settings, and failure handling.
 3. Build SQL tables and queries; preserve existing comparison behavior while moving storage to SQLite.
 4. Add quote-text extraction, schema validation, source tracking, and checked examples. Introduce PDFs after text inputs work. A hosted-provider comparison can reuse the same examples.
-5. Build a small HTTP API with FastAPI and Uvicorn; use HTTPX to inspect requests and responses.
-6. Add document retrieval and answers with evidence, first using a pipeline whose individual steps you understand.
-7. Expose lookup functions through direct tool calling, then build a bounded agent workflow and an MCP server experiment.
+5. Build a small HTTP API with FastAPI and Uvicorn; use HTTPX or curl to inspect requests and responses.
+6. Add document retrieval and answers with evidence, first using a pipeline whose individual steps you understand. Build a keyword search baseline before the embedding search.
+7. Expose lookup functions through direct tool calling, then build a bounded agent workflow and an MCP server experiment. Compare the agent with a fixed workflow and test a document that tries to redirect the app.
 8. Expand the evaluation runner with DeepEval while preserving exact business-rule and field checks. Continue measuring quality at every earlier stage too.
 9. Package the working application using Docker, including configuration, persistent data, and a health check.
-10. Deploy a practice version on either AWS or Google Cloud; document networking, the inference endpoint, storage, logs, costs, and rollback. Compare the second provider conceptually before doing another deployment.
-11. Add PostHog measurements and cost/resource controls, then use observed failures to extend the checked examples.
+10. Deploy a practice version on AWS first, after setting a budget alert; document networking, the inference endpoint, storage, logs, costs, and rollback, then remove the demo resources. Map the same concepts to Google Cloud before doing another deployment. Then practice release checks and recovery: tests in GitHub Actions, a backup restore, and a rollback.
+11. Add PostHog or Amplitude measurements and cost/resource controls, report p95 latency and cost per successful result, then use observed failures to extend the checked examples.
 12. Complete the later Hugging Face/PyTorch and LangChain comparison modules, and prepare a documented demonstration with a clear account of the design and results.
+13. Turn the project into career evidence: test it with a broker or peer, package the portfolio, practice coding and system-design interviews, and begin targeted applications.
 
-This order is a learning guide rather than a fixed calendar. Early model API practice can run alongside the Python exercises. Add later infrastructure and framework modules when the functions they depend on are understood and working.
+Milestone numbers identify lessons. The 24-week calendar below gives the suggested order and pace. Early model API practice can run alongside the Python exercises. Add later infrastructure and framework modules when the functions they depend on are understood and working.
+
+## 24-week calendar
+
+The study plan groups the milestones into six four-week blocks. [S25] Dates are suggestions.
+
+| Weeks | Suggested dates | Focus | Milestones | What you can show |
+| --- | --- | --- | --- | --- |
+| 1-4 | 2026-11-23 to 2026-12-20 | Python, SQL, and HTTP | 1, 3, 5 | Find the cheapest eligible offer and pass all 10 starter cases |
+| 5-8 | 2026-12-21 to 2027-01-17 | Model APIs and context | 2, 4, and the Hugging Face/PyTorch part of 12 | Extract checked fields and compare two models on unseen examples |
+| 9-12 | 2027-01-18 to 2027-02-14 | Retrieval and evaluation | PDF part of 4, then 6 and 8 | Answer a policy question with the right supplier, page, and passage |
+| 13-16 | 2027-02-15 to 2027-03-14 | Tool calling, agents, and MCP | 7, and the LangChain part of 12 | Combine lookup and policy search in a workflow you can trace and stop |
+| 17-20 | 2027-03-15 to 2027-04-11 | Deployment and operations | 9, 10, 11 | Deploy a demo, observe cost and failures, and recover from a bad release |
+| 21-24 | 2027-04-12 to 2027-05-09 | Portfolio and interviews | 13, and the demonstration part of 12 | Give a working demo, defend a design decision, and start targeted applications |
+
+The calendar schedules four topics earlier than their milestone numbers suggest: the HTTP API in week 4, the direct Hugging Face/PyTorch experiment in week 8, DeepEval in week 12, and the LangChain comparison in week 16. Follow the calendar's order when the functions a topic depends on already work. Otherwise finish the prerequisite lesson first.
+
+Suggested weekly split: 2 hours studying, 4 to 6 hours building, 1 hour testing a failure, and 1 hour explaining the result. Write the first attempt yourself, ask for a hint when stuck, and save one short build note each week.
+
+| Block | Checkpoint |
+| --- | --- |
+| Weeks 1-4 | For TRAIN-PN-001 in OH, USD, OUTRIGHT: one unit selects Q002 at USD 1,100.00; two select Q001 at USD 1,250.00 each; three return no eligible quote. Explain every rejection and pass all 10 cases |
+| Weeks 5-8 | A message with a price and no currency keeps the price, shows the original phrase, and flags the missing currency before ranking |
+| Weeks 9-12 | For a wrong answer, show whether the search or the answer failed, with before-and-after counts |
+| Weeks 13-16 | Walk one trace from question to citation: who picked the tool, who authorized it, which arguments were accepted, and why the run stopped |
+| Weeks 17-20 | Show what one successful result costs, the p95 latency, and a rollback that preserves the quotes |
+| Weeks 21-24 | Give a five-minute walkthrough without notes |
 
 ## How learning success will be judged
 
@@ -336,7 +418,30 @@ The software can import a quote, preserve and validate its fields, store it, fin
 
 For the expanded roadmap, you can also explain the API boundary, a bounded agent's tool choices, an MCP connection, the container's persistent data, and a deployment on one provider. You can distinguish evaluation quality from product usage and describe the measured cost/quality tradeoff of a model choice.
 
+For the study plan's portfolio checklist, keep four pieces of evidence ready. [S25]
+
+| Evidence | What to show |
+| --- | --- |
+| A business decision | Two units of TRAIN-PN-001, OH, OUTRIGHT, USD returns Q001 with a USD 2,500.00 line amount before fees. Show why the USD 700.00 exchange quote and the USD 1,100.00 one-unit quote do not qualify |
+| A traced answer | The winning supplier's document, page, and supporting passage for a returns question, and how the app handles a question about an unmentioned fee |
+| Measurements | Test-set size, exact field accuracy, top-three retrieval hits, supported citations, p95 latency, and cost per successful request, with one before-and-after comparison including its failures |
+| An engineering choice | A timeout or a bad extraction: the log or trace, what the user saw, and the evidence that the fix worked. Explain why SQL handles money and why the model reads prose |
+
+You can also write the eligibility rule from memory, explain your model choice, and describe how to recover if the provider or the database is unavailable.
+
 The tutoring preference is to use plain explanations, small tasks, hints, and code review. You write the implementation. Full feature implementations should be supplied only when you explicitly request them. Sample data, expected results, documentation, and small explanatory examples support the learning process.
+
+## After the first portfolio project
+
+These are optional directions from the study plan. [S25] They start only after milestone 13.
+
+- Own a live system: operate a small pilot across several releases, track user outcomes, investigate failures, restore a backup, and explain one reliability-versus-cost decision to a nontechnical stakeholder.
+- Model depth, when your error analysis justifies it: labeled data, train/dev/test splits, fine-tuning, and overfitting.
+- Systems depth: batching, caching, concurrency, and model serving under load.
+- A second portfolio project: apply the same skills to VoiceDoc-AI.
+- The video's optional capstones: build a small language model from scratch to study transformers and optimization, or coordinate several agents to plan, implement, and review one task. [S38]
+
+Fine-tuning and a small from-scratch model are study exercises. Training a new foundation model stays outside the scope.
 
 ## Technical references
 
@@ -364,3 +469,18 @@ The tutoring preference is to use plain explanations, small tasks, hints, and co
 - [S22: PostHog Python SDK](https://posthog.com/docs/libraries/python)
 - [S23: HTTPX](https://www.python-httpx.org/)
 - [S24: FastAPI, including its Uvicorn server integration](https://fastapi.tiangolo.com/)
+- S25: Your AI engineering roadmap, a 24-week study plan for this project (PDF created 2026-11-21; suggested dates 2026-11-23 to 2027-05-09)
+- [S26: Python 3.12 tutorial](https://docs.python.org/3.12/tutorial/)
+- [S27: SQLBolt exercises](https://sqlbolt.com/)
+- [S28: FastAPI tutorial](https://fastapi.tiangolo.com/tutorial/)
+- [S29: Ollama quickstart](https://docs.ollama.com/quickstart)
+- [S30: Anthropic on workflows and agents](https://www.anthropic.com/research/building-effective-agents)
+- [S31: AWS EC2 first instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
+- [S32: AWS Budgets](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html)
+- [S33: GitHub Actions](https://docs.github.com/en/actions)
+- [S34: Amplitude Python SDK](https://amplitude.com/docs/sdks/analytics/python)
+- [S35: PostHog product analytics](https://posthog.com/docs/product-analytics)
+- [S36: OpenAI quickstart](https://developers.openai.com/api/docs/quickstart) and [Anthropic quickstart](https://platform.claude.com/docs/en/get-started)
+- [S37: DeepEval quickstart](https://deepeval.com/docs/getting-started)
+- [S38: Capstone repository from the video](https://github.com/rohitg00/ai-engineering-from-scratch)
+- S39: Optional DataCamp resources: [Python fundamentals](https://www.datacamp.com/tracks/python-programming-fundamentals), [SQL fundamentals](https://www.datacamp.com/tracks/sql-fundamentals), [Associate AI Engineer for Developers track](https://www.datacamp.com/tracks/associate-ai-engineer-for-developers), and [certification](https://www.datacamp.com/certification/ai-engineer-for-developers-associate)

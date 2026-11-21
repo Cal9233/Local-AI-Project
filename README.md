@@ -1,6 +1,6 @@
 # Aviation Quote Intelligence Assistant
 
-A learning project: a command-line assistant that imports supplier quotes, finds the cheapest eligible offer, and (later) answers questions with evidence from supplier documents, using existing models via Ollama. Later milestones grow it into an HTTP API with a bounded agent, an MCP server, Docker/cloud deployment, evaluation, and usage/cost measurement.
+A learning project: a command-line assistant that imports supplier quotes, finds the cheapest eligible offer, and (later) answers questions with evidence from supplier documents, using existing models via Ollama. Later milestones grow it into an HTTP API with a bounded agent, an MCP server, Docker/cloud deployment with tested releases, evaluation, usage/cost measurement, and a portfolio demo. The 24-week calendar is in `learning/CURRICULUM.md`.
 
 The main goal is to learn to write, debug, explain, and evaluate AI-powered business software independently. See `docs/PROJECT_BRIEF.md` for the full brief.
 
