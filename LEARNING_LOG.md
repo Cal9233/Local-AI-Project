@@ -13,3 +13,6 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 - Recreated `.venv` (Python 3.12.16); installed ollama + pydantic, recorded in `requirements.txt`. Decision: `model.py` is the model-practice file.
 - Installed pypdf 7.0.1 and qdrant-client 1.20.0 early (on request); recorded in `requirements.txt`.
 - Completed 2.1 (out of order): first Ollama chat request; can explain the request path and response fields. Decision: continue with 2.2 before finishing Milestone 1.
+
+## 2026-11-21
+- Completed 2.2: forced Enum makes the model choose a code instead of "unknown"; same input can give different values across runs. Decision: map conditions in Python with a lookup table; unknown → None + review flag, keep raw text.

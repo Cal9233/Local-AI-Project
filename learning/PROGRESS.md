@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 1.2 — Functions that return values (returned from 2.2 on 2026-11-20; 2.2 paused, see Notes)
+**Current lesson:** 1.2 — Functions that return values (resume Milestone 1; 2.2 completed 2026-11-21)
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -20,7 +20,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
 ## Milestone 2 — First model API experiment
 - [x] 2.1 Reach the model service — 2026-11-12: `model.py` sends one chat request to `qwen3.5:9b` via the ollama client to `localhost:11434`; identified `message.content` vs `thinking`, ns durations, token counts (`eval_count` includes thinking). Checkpoint: predicted connection error with server off; explained remote host change (`Client(host=...)`/`OLLAMA_HOST`, bind 0.0.0.0); log `model`, verify content against source.
-- [~] 2.2 Structured extraction — draft `Quote` model in `model.py`; paused 2026-11-20 (no model service on the Mac yet).
+- [x] 2.2 Structured extraction — 2026-11-21: Enum-constrained Quote with Decimal price; showed valid-but-wrong (SV for "Inspected/Tested"; 0.00 price on 1 of 3 runs); explained schema checks shape, not truth vs source.
 - [ ] 2.3 Failure handling
 - [ ] 2.4 Context and request settings
 

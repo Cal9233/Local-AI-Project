@@ -1,29 +1,54 @@
 from ollama import chat
 from ollama import ChatResponse
 from pydantic import BaseModel
+from decimal import Decimal
+from enum import Enum
+
+quote = """Hi,
+
+Thanks for your RFQ. We can offer the following:
+
+P/N: TRAIN-PN-004
+Qty: 3 EA
+Condition: Inspected/Tested, with tags from our repair station
+Price: USD 14,625.00 total, outright sale
+Lead time: Stock, ships same day
+
+Regards,
+Northwind Aero Spares"""
+
+class Conditions(str, Enum):
+    OVERHAUL = "OH"
+    SERVICABLE = "SV"
+    NEW = "NE"
+
+class Sales(str, Enum):
+    OUTRIGHT = "OUTRIGHT"
+    EXCHANGE = "EXCHANGE"
 
 class Quote(BaseModel):
     part_number: str
     quantity: int
-    condition: str
+    condition: Conditions | None
     currency: str
-    unit_price: float
-    sale_basis: str
+    unit_price: Decimal
+    sale_basis: Sales
 
 response: ChatResponse = chat(
-    # model='qwen3.5:9b', # Linux WorkStation
-    model='qwen/qwen3-14b', # Macbook WorkStation
+    model='qwen3.5:9b', # Linux WorkStation
+    # model='qwen/qwen3-14b', # Macbook WorkStation
     messages=[
         {
             'role': 'user',
-            'content': 'Return all information related to the part number.'
+            'content': quote
         }],
     think=True,
     stream=False,
     format=Quote.model_json_schema()
 )
 
-response = Quote(part_number="TRAIN-PN-001", quantity=2, condition="overhauled",
-      currency="USD", unit_price="1250.00", sale_basis="exchange")
+#response = Quote()
 
-print(response)
+print("RAW:", response.message.content)
+quote_result = Quote.model_validate_json(response.message.content)
+print("VALIDATED:", quote_result)
