@@ -45,6 +45,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [ ] 7.1 Direct tool calling
 - [ ] 7.2 Bounded agent workflow
 - [ ] 7.3 MCP server
+- [ ] 7.4 Fixed workflow vs. agent; prompt-injection test
 
 ## Milestone 8 — Evaluation
 - [ ] 8 Evaluation
@@ -52,16 +53,25 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 ## Milestone 9 — Docker
 - [ ] 9 Docker
 
-## Milestone 10 — Cloud deployment
-- [ ] 10 Cloud deployment
+## Milestone 10 — Cloud deployment and releases
+- [ ] 10.1 Deploy one small cloud demo (AWS first)
+- [ ] 10.2 Release checks and recovery (GitHub Actions, backup, rollback)
 
 ## Milestone 11 — Telemetry and cost control
 - [ ] 11 Telemetry and cost
 
 ## Milestone 12 — Ecosystem modules and demonstration
-- [ ] 12 Ecosystem modules and demo
+- [ ] 12.1 Run a model directly (Hugging Face, PyTorch)
+- [ ] 12.2 LangChain comparison and demonstration
+
+## Milestone 13 — Portfolio and interviews
+- [ ] 13.1 Test whether the assistant helps a broker
+- [ ] 13.2 Package a reproducible portfolio project
+- [ ] 13.3 Coding and system-design interview practice
+- [ ] 13.4 Get visible and apply
 
 ## Notes
 - Decision 2026-11-12: `model.py` is the brief's `model_practice.py` (first model experiments).
 - Decision 2026-11-12: brief expanded (API service, context/model selection, hosted providers, agents/MCP, Docker/cloud, DeepEval, PostHog, HF/PyTorch/LangChain). Milestones renumbered 5–12; no completed lessons affected.
 - 2026-11-20: Working on a Mac with no Ollama installed (`ollama` not on PATH, nothing on :11434). LM Studio runs `qwen/qwen3-14b` at `localhost:1234` (OpenAI-compatible `/v1/*`). Undecided: install Ollama, use the Linux machine, or switch 2.x to LM Studio.
+- Decision 2026-11-21: roadmap aligned with the 24-week study plan PDF (brief reference S25; suggested dates 2026-11-23 to 2027-05-09). Added lessons 7.4, 10.2, and Milestone 13; split 10 into 10.1/10.2 and 12 into 12.1/12.2; added curl, a keyword-search baseline, named AWS services, GitHub Actions, and Amplitude as a PostHog alternative. No completed lessons affected. The calendar in `CURRICULUM.md` gives the suggested order.

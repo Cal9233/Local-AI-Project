@@ -47,8 +47,10 @@ response: ChatResponse = chat(
     format=Quote.model_json_schema()
 )
 
-#response = Quote()
-
-print("RAW:", response.message.content)
-quote_result = Quote.model_validate_json(response.message.content)
-print("VALIDATED:", quote_result)
+try:
+    print("RAW:", response.message.content)
+    quote_result = Quote.model_validate_json(response.message.content)
+except ConnectionError:
+    print("Model server not reachable at localhost:11434. Is Ollama running?")
+finally:
+    print("VALIDATED:", quote_result)

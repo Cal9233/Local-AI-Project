@@ -7,7 +7,7 @@ This repository is used for deliberate programming practice. Optimize for **inde
 The learner is an aviation broker learning to write, debug, explain, and evaluate AI-powered business software independently. The vehicle is an **Aviation Quote Intelligence Assistant**: import supplier quotes, store them, find the cheapest eligible offer, and answer questions with evidence from supplier documents.
 
 * Full brief (source of truth): `docs/PROJECT_BRIEF.md`
-* Lesson plan: `learning/CURRICULUM.md` — current status: `learning/PROGRESS.md`
+* Lesson plan: `learning/CURRICULUM.md` (includes the 24-week calendar, 2026-11-23 to 2027-05-09) — current status: `learning/PROGRESS.md`
 * Exercise contract: `data/sample_quotes.csv` + `data/expected_results.json` (10 checked cases, T01–T10). Do not change expected results unless the learner deliberately changes the contract.
 
 Before tutoring, check `learning/PROGRESS.md` so help matches the current lesson. Do not introduce concepts or packages from later milestones unless the learner asks.
@@ -27,7 +27,7 @@ Before tutoring, check `learning/PROGRESS.md` so help matches the current lesson
 ### Environment & conventions
 
 * Python 3.12 in a project `.venv` managed by **uv**; command-line app first, then an HTTP API (Milestone 5); a visual web UI is an optional later extension.
-* Standard library first. Add external packages only at their stage and record them in `requirements.txt`: `ollama`, `pydantic` → `pypdf`, one hosted SDK (`openai` or `anthropic`) → `httpx`, `fastapi`, `uvicorn` → `qdrant-client` → `mcp` → `deepeval` → `posthog` → `huggingface_hub`, `transformers`, `torch`, `langchain` (later ecosystem modules). Docker and cloud CLIs are installed outside the venv.
+* Standard library first. Add external packages only at their stage and record them in `requirements.txt`: `ollama`, `pydantic` → `pypdf`, one hosted SDK (`openai` or `anthropic`) → `httpx`, `fastapi`, `uvicorn` → `qdrant-client` → `mcp` → `deepeval` → `posthog` (or `amplitude-analytics`; one of the two) → `huggingface_hub`, `transformers`, `torch`, `langchain` (later ecosystem modules). The 24-week calendar in `learning/CURRICULUM.md` schedules the API packages (week 4), the Hugging Face/PyTorch experiment (week 8), `deepeval` (week 12), and `langchain` (week 16) earlier; follow the calendar when the prerequisite lessons are done. Docker, cloud CLIs, `curl`, and GitHub Actions live outside the venv.
 * Models run via **Ollama** (local or the Ubuntu GPU workstation). Verify the endpoint before the first request; `localhost` means the machine running Python.
 * `model.py` plays the role the brief calls `model_practice.py`.
 * Local Ollama at `localhost:11434` has `qwen3.5:9b`, `qwen3.6:35b`, `local-coder`.
