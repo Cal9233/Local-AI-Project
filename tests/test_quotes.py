@@ -48,22 +48,49 @@ class TestContract(unittest.TestCase):
         cls.cases = contract["test_cases"]
         cls.quotes = load_quotes(DATA_DIR / contract["dataset_file"])
 
-    def test_contract_cases(self):
-        self.assertEqual(len(self.cases), 10)
-        for case in self.cases:
-            with self.subTest(case=case["id"]):
-                if case["action"] == "filter_by_part_number":
-                    actual = {
-                        "matching_quote_ids": filter_by_part_number(
-                            self.quotes, case["input"]["part_number"]
-                        )
-                    }
-                elif case["action"] == "find_cheapest_eligible_quote":
-                    actual = find_cheapest_eligible_quote(self.quotes, case["input"])
-                else:
-                    self.fail(f"unknown action {case['action']!r}")
-                self.assertEqual(actual, case["expected"])
+    def run_case(self, case_id):
+        case = [i for i in self.cases if i["id"] == case_id].pop(0)
+        if case["action"] == "filter_by_part_number":
+            actual = {
+                "matching_quote_ids": filter_by_part_number(
+                    self.quotes, case["input"]["part_number"]
+                )
+            }
+        elif case["action"] == "find_cheapest_eligible_quote":
+            actual = find_cheapest_eligible_quote(self.quotes, case["input"])
+        else:
+            self.fail(f"unknown action {case['action']!r}")
+        self.assertEqual(actual, case["expected"])
 
+    def test_T01(self):
+        self.run_case('T01')
+
+    def test_T02(self):
+        self.run_case('T02')
+
+    def test_T03(self):
+        self.run_case('T03')
+
+    def test_T04(self):
+        self.run_case('T04')
+
+    def test_T05(self):
+        self.run_case('T05')
+
+    def test_T06(self):
+        self.run_case('T06')
+
+    def test_T07(self):
+        self.run_case('T07')
+
+    def test_T08(self):
+        self.run_case('T08')
+
+    def test_T09(self):
+        self.run_case('T09')
+
+    def test_T10(self):
+        self.run_case('T10')
 
 class TestValidateRequest(unittest.TestCase):
     """Unit tests: invalid requests raise instead of returning False."""
