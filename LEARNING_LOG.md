@@ -16,3 +16,6 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 
 ## 2026-11-21
 - Completed 2.2: forced Enum makes the model choose a code instead of "unknown"; same input can give different values across runs. Decision: map conditions in Python with a lookup table; unknown → None + review flag, keep raw text.
+
+## 2026-11-22
+- Completed 1.2 (functions that return values); next: 1.3.

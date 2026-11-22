@@ -4,14 +4,14 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 1.2 — Functions that return values (resume Milestone 1; 2.2 completed 2026-11-21)
+**Current lesson:** 1.3 — Filter by part number
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
 
 ## Milestone 1 — Business rules in plain Python
 - [x] 1.1 Read your own program — *evidence from brief:* CSV reading with `DictReader`, named fields, int quantity, display, exact part search, found-flag no-match message; manual checks: 4 matches for TRAIN-PN-001, 1 for TRAIN-PN-002, no-match for TRAIN-PN-003. Debugging exercise established loop vs. after-loop meaning of `found == False`.
-- [~] 1.2 Functions that return values — 2026-11-20: `load_quotes(path)` returns a list of row dicts; `main()` handles input/printing behind `if __name__ == "__main__"`. Still to show: call `load_quotes` from a Python shell, CLI unchanged, `pathlib.Path` not yet used.
+- [x] 1.2 Functions that return values — 2026-11-22: `load_quotes` returns typed rows (int qty, Decimal price); `Path(__file__)` locates the CSV; command-line output unchanged (4/1/no-match); imported from a shell without `input` running; explained the `__name__` guard and script-relative vs folder-relative paths.
 - [ ] 1.3 Filter by part number (T01, T10)
 - [ ] 1.4 Eligibility rules — requested-quantity filtering not yet demonstrated.
 - [ ] 1.5 Money and the cheapest offer (T02, T07) — decimal pricing not yet demonstrated.
