@@ -15,6 +15,13 @@ def load_quotes(path):
             data.append(row)
         return data
 
+def filter_by_part_number(quotes, part_number):
+    result = []
+    for q in quotes:
+        if part_number == q["part_number"]:
+            result.append(q["quote_id"])
+    return result
+
 def main():
     pn = input("Enter part number: ")
     quotes = load_quotes(file_dir)
