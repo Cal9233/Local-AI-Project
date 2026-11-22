@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 1.7 — Consolidate
+**Current lesson:** 3.1 — Design the table
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -16,7 +16,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [x] 1.4 Eligibility rules — 2026-11-22: `find_eligible` matches T03/T04/T05/T06/T08/T09; invalid qty (0, -1, '2') raises ValueError, validated once before the loop. Checkpoint: predicted SV/EXCHANGE case, explained bool-as-int, solved "either sale basis" by running twice.
 - [x] 1.5 Money and the cheapest offer — 2026-11-22: `find_cheapest_eligible_quote` matches T02–T09 exactly; prices and totals quantized to two-decimal strings (1100.5 → "1100.50"); tie-break by (price, quote_id). Checkpoint: explained why T07 can't catch the key-order bug, float vs Decimal, transfer to line-total + max-stock tie-break (needed hint on negation/request in key).
 - [x] 1.6 Automate the ten checks — 2026-11-22: tests/test_quotes.py runs T01–T10 as separate tests via run_case (17 total, OK); predicted and observed that >= → > fails exactly T02/T03; read -/+/? diffs. Checkpoint: string money catches '2500.0' (Decimal equality wouldn't); setUpClass vs setUp and shared-data risk; T11 expected correct but missed adding the case to the JSON contract first. Suite scaffold largely externally generated; learner fixed it and explained it.
-- [ ] 1.7 Consolidate
+- [x] 1.7 Consolidate — 2026-11-22: explained the CSV → typed rows → part filter → find_eligible → cheapest (price, quote_id) → two-decimal string pipeline from memory, plus why typing happens at load (str vs int TypeError; "10" >= "9" passes silently but is wrong); mistakes.md autopsy of the >= → > boundary bug (T02/T03); 17 tests pass. Checkpoint transfer: lead time "at most 10" → `<= 10`, tested at exactly 10.
 
 ## Milestone 2 — First model API experiment
 - [x] 2.1 Reach the model service — 2026-11-12: `model.py` sends one chat request to `qwen3.5:9b` via the ollama client to `localhost:11434`; identified `message.content` vs `thinking`, ns durations, token counts (`eval_count` includes thinking). Checkpoint: predicted connection error with server off; explained remote host change (`Client(host=...)`/`OLLAMA_HOST`, bind 0.0.0.0); log `model`, verify content against source.

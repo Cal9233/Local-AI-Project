@@ -19,3 +19,12 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - 2026-11-22 Confused selecting one item by index (`q_rows[1]`, `q_rows["unit_price"]`) with mapping over all items; also put `quote_id` before price in the `min` key. Corrected: indexing picks one element; a loop/comprehension transforms every element. The key function receives one item, `min` receives the whole list, and tuple order sets comparison priority.
 - 2026-11-22 Passed a Path to json.load (needs an open file object), then passed the JSON path to load_quotes (KeyError: 'quantity'). Lesson: know what each function expects to receive, and which file holds data vs answers.
 - 2026-11-22 Copy-pasted ten methods all named test_T01: no error, but only the last survived (Ran 8 tests, T01 running 'T10'). Also used a list comprehension result as if it were the dict. Lesson: a repeated name silently overwrites the earlier one; always check the test count.
+
+## 2026-11-22 — Stock check boundary (Lesson 1.6)
+
+- **Symptom:** Changing `>=` to `>` in the stock check made T02 and T03 fail; the other 8 cases passed.
+- **My original explanation:** I assumed a quote with exactly the requested stock couldn't fill the order.
+- **Corrected understanding:** Exact stock fills the request, so `qty_available >= requested_qty` is correct.
+  T02/T03 caught it because they request exactly the available stock: the boundary.
+  The other cases are clearly above or below, so `>` and `>=` agree on them.
+- **Rule going forward:** Every comparison rule needs a test where both sides are equal.
