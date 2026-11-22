@@ -49,6 +49,25 @@ def find_eligible(quotes, request):
             result.append(q["quote_id"])
     return result
 
+def eligible_quotes(quotes, request):
+    validate_request(request)
+    result = []
+    for q in quotes:
+        if is_eligible(q, request):
+            result.append(q)
+    return result
+
+def price_then_id(q):
+    return (q["unit_price"], q["quote_id"])
+
+def find_cheapest_eligible_quote(quotes, request):
+    q_rows = eligible_quotes(quotes, request)
+    if len(q_rows) == 0:
+        return {"status": "no_eligible_quote", "eligible_quote_ids": [], "best_quote_id": None, "unit_price": None, "line_total": None}
+    best = min(q_rows, key=price_then_id)
+    line_total = best["unit_price"] * request["requested_quantity"]
+    return {"status": "found", "eligible_quote_ids": [i["quote_id"] for i in q_rows], "best_quote_id": best["quote_id"], "unit_price": str(best["unit_price"].quantize(Decimal("0.01"))), "line_total": str(line_total.quantize(Decimal("0.01")))}
+
 def main():
     pn = input("Enter part number: ")
     quotes = load_quotes(file_dir)
