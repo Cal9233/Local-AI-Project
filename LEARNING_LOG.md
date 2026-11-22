@@ -19,3 +19,4 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 
 ## 2026-11-22
 - Completed 1.2 (functions that return values); next: 1.3.
+- Completed 1.3 (filter by part number); decided input cleanup stays out of the filter.
