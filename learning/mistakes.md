@@ -28,3 +28,10 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
   T02/T03 caught it because they request exactly the available stock: the boundary.
   The other cases are clearly above or below, so `>` and `>=` agree on them.
 - **Rule going forward:** Every comparison rule needs a test where both sides are equal.
+
+## 2026-11-22 — Timeout never applied (Lesson 2.3)
+
+- **Symptom:** Created `Client(timeout=30)` but the request still had no timeout; no error was raised.
+- **My original explanation:** None recorded; the bug went unnoticed until code review.
+- **Corrected understanding:** The call used module-level `chat()`, which has its own default client with no timeout; only `client.chat()` uses the configured one. Found by reading the code, confirmed with `timeout=0.5` raising `httpx.ReadTimeout`.
+- **Rule going forward:** An unused variable or import is a hint that the wiring is wrong.

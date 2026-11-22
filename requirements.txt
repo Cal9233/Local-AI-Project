@@ -2,6 +2,7 @@
 # Model APIs / structured extraction
 ollama==0.6.3
 pydantic==2.14.3
+httpx==0.28.1
 # PDF ingestion
 pypdf==7.0.1
 # Retrieval
