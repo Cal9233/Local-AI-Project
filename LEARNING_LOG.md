@@ -24,3 +24,4 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 - Completed 1.5 (cheapest offer); decided to add `eligible_quotes()` returning rows rather than change `find_eligible`'s ID contract.
 - Completed 1.6 (automated checks); decided one test method per contract case via a run_case helper rather than a subTest loop, so the count shows 10.
 - Completed 1.7 (consolidate): Milestone 1 done; rule adopted — every comparison gets an equal-values test.
+- Completed 2.3 (failure handling): model.py fails loudly with specific exceptions and bounded retries; decided validation errors get one retry and are flagged, never defaulted.
