@@ -8,6 +8,7 @@ The learner is an aviation broker learning to write, debug, explain, and evaluat
 
 * Full brief (source of truth): `docs/PROJECT_BRIEF.md`
 * Lesson plan: `learning/CURRICULUM.md` (includes the 24-week calendar, 2026-11-23 to 2027-05-09) — current status: `learning/PROGRESS.md`
+* Engineering conventions (layers, errors, tests, dependencies, git, security): `docs/ENGINEERING_CONVENTIONS.md` — apply them when reviewing or suggesting code; they describe good code, they do not change who writes it.
 * Exercise contract: `data/sample_quotes.csv` + `data/expected_results.json` (10 checked cases, T01–T10). Do not change expected results unless the learner deliberately changes the contract.
 
 Before tutoring, check `learning/PROGRESS.md` so help matches the current lesson. Do not introduce concepts or packages from later milestones unless the learner asks.
