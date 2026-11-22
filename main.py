@@ -3,7 +3,7 @@ from pathlib import Path
 from decimal import Decimal
 
 file_path = Path(__file__).resolve().parent 
-file = file_path / "data" / "sample_quotes"
+file_dir = file_path / "data" / "sample_quotes.csv"
 
 def load_quotes(path):
     with open(path, "r") as file:
@@ -17,7 +17,7 @@ def load_quotes(path):
 
 def main():
     pn = input("Enter part number: ")
-    quotes = load_quotes(file_path)
+    quotes = load_quotes(file_dir)
     found = False
     for row in quotes:
         match = row['part_number']
