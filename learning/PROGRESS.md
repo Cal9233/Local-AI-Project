@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 1.6 — Automate the ten checks
+**Current lesson:** 1.7 — Consolidate
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -15,7 +15,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [x] 1.3 Filter by part number (T01, T10) — 2026-11-22: `filter_by_part_number` returns IDs in CSV order; T01, T10, small-match and case-sensitivity cases pass; explained the loop-order source and the effect of `return` inside the loop.
 - [x] 1.4 Eligibility rules — 2026-11-22: `find_eligible` matches T03/T04/T05/T06/T08/T09; invalid qty (0, -1, '2') raises ValueError, validated once before the loop. Checkpoint: predicted SV/EXCHANGE case, explained bool-as-int, solved "either sale basis" by running twice.
 - [x] 1.5 Money and the cheapest offer — 2026-11-22: `find_cheapest_eligible_quote` matches T02–T09 exactly; prices and totals quantized to two-decimal strings (1100.5 → "1100.50"); tie-break by (price, quote_id). Checkpoint: explained why T07 can't catch the key-order bug, float vs Decimal, transfer to line-total + max-stock tie-break (needed hint on negation/request in key).
-- [ ] 1.6 Automate the ten checks
+- [x] 1.6 Automate the ten checks — 2026-11-22: tests/test_quotes.py runs T01–T10 as separate tests via run_case (17 total, OK); predicted and observed that >= → > fails exactly T02/T03; read -/+/? diffs. Checkpoint: string money catches '2500.0' (Decimal equality wouldn't); setUpClass vs setUp and shared-data risk; T11 expected correct but missed adding the case to the JSON contract first. Suite scaffold largely externally generated; learner fixed it and explained it.
 - [ ] 1.7 Consolidate
 
 ## Milestone 2 — First model API experiment

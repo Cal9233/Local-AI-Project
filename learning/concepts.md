@@ -16,3 +16,4 @@ Record durable understanding, not every definition encountered.
 - **Example:** Server stopped → `chat()` raises a connection error; the venv package can't answer on its own.
 - **Related concepts:** endpoints, response fields (`message.content`, `thinking`, `eval_count`), failure handling (2.3).
 - 2026-11-21 Valid ≠ correct: Pydantic sees only the JSON, never the source. Rules (enum, >0) block impossible values; only comparison with the source proves values are true.
+- 2026-11-22 unittest: discovery needs test*.py files, TestCase subclasses and test_ method names; the "Ran N tests" line is evidence too. Compare the whole result, since status alone hid the T02 bug.
