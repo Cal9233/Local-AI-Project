@@ -22,6 +22,33 @@ def filter_by_part_number(quotes, part_number):
             result.append(q["quote_id"])
     return result
 
+def validate_request(request):
+    qty = request["requested_quantity"]
+    if not isinstance(qty, int):
+        raise ValueError(f"requested_quantity must be a whole number, got {qty!r}")
+    if qty < 1:
+        raise ValueError(f"requested_quantity must be at least 1, got {qty}")
+
+def is_eligible(quote, request):
+    result = False
+    if (
+        quote["part_number"] == request["part_number"]
+        and quote["condition"] == request["condition"]
+        and quote["currency"] == request["currency"]
+        and quote["sale_basis"] == request["sale_basis"]
+        and quote["quantity"] >= int(request["requested_quantity"])
+    ):
+        result = True
+    return result
+
+def find_eligible(quotes, request):
+    validate_request(request)
+    result = []
+    for q in quotes:
+        if is_eligible(q, request):
+            result.append(q["quote_id"])
+    return result
+
 def main():
     pn = input("Enter part number: ")
     quotes = load_quotes(file_dir)
