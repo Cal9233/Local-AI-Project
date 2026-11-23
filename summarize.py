@@ -1,29 +1,8 @@
-from ollama import chat, ChatResponse, Client
-from pydantic import BaseModel, ValidationError
-from decimal import Decimal
-from enum import Enum
-import sys
-import httpx
-import time
-import os
-from dotenv import load_dotenv
-import platform
-from pathlib import Path
 import lmstudio as lms
-import csv
 
-BASE_DIR = Path(__file__).resolve().parent
-EMAIL_DIR = BASE_DIR / "data" / "sample_email.txt"
-os_name = platform.system()
+from config import BASE_DIR, LLM_MODEL
 
-if os_name == "Darwin":
-    load_dotenv(BASE_DIR / ".env.mac", override=True)
-elif os_name == "Linux":
-    load_dotenv(BASE_DIR / ".env.linux", override=True)
-
-LLM_MODEL_HOST = os.getenv("MODEL_HOST")
-LLM_MODEL = os.getenv("MODEL")
-PORT = os.getenv("PORT")
+EMAIL_PATH = BASE_DIR / "data" / "sample_email.txt"
 SUMMARY_PROMPT_V1 = """You are summarizing emails from supplier for Genthrust.
 Do not make up your own information either if ambigous.
 
@@ -40,7 +19,7 @@ def read_email(file_path):
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
-email = read_email(EMAIL_DIR)
+email = read_email(EMAIL_PATH)
 model = lms.llm(LLM_MODEL)
 chat = lms.Chat(SUMMARY_PROMPT_V1)
 chat.add_user_message(email)
