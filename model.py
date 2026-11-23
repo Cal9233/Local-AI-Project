@@ -1,27 +1,13 @@
-from ollama import ChatResponse, Client
+from ollama import ChatResponse, Client, ResponseError
 from pydantic import BaseModel, ValidationError
 from decimal import Decimal
 from enum import Enum
 import sys
 import httpx
 import time
-import os
-from dotenv import load_dotenv
-import platform
-from pathlib import Path
 import lmstudio as lms
 
-BASE_DIR = Path(__file__).resolve().parent
-os_name = platform.system()
-
-if os_name == "Darwin":
-    load_dotenv(BASE_DIR / ".env.mac", override=True)
-elif os_name == "Linux":
-    load_dotenv(BASE_DIR / ".env.linux", override=True)
-
-LLM_MODEL_HOST = os.getenv("MODEL_HOST")
-LLM_MODEL = os.getenv("MODEL")
-PORT = os.getenv("PORT")
+from config import OS_NAME, LLM_MODEL_HOST, LLM_MODEL
 
 quote = """Hi,
 
@@ -77,7 +63,7 @@ def ask_model(quote_text: str) -> str:
 
     Only the request differs per machine: LM Studio on the Mac, Ollama on Linux.
     """
-    if os_name == "Darwin":
+    if OS_NAME == "Darwin":
         model = lms.llm(LLM_MODEL)
         chat = lms.Chat(SYSTEM_PROMPT_V1)
         chat.add_user_message(quote_text)
@@ -102,25 +88,33 @@ def main():
     validation_failures = 0
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
+        # 1. Get a reply. Failures here are transport/server problems, not the model's output.
         try:
             raw = ask_model(quote)
-            print("RAW:", raw)
-            quote_result = Quote.model_validate_json(raw)
         except ConnectionError:
             print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at {LLM_MODEL_HOST}.")
         except httpx.TimeoutException:
             print(f"Attempt {attempt}/{MAX_ATTEMPTS}: no response within {TIMEOUT}s (server reachable, generation too slow).")
         except lms.LMStudioError as err:
             print(f"Attempt {attempt}/{MAX_ATTEMPTS}: LM Studio request failed ({type(err).__name__}): {err}")
-        except ValidationError as err:
-            validation_failures += 1
-            print(f"Attempt {attempt}/{MAX_ATTEMPTS}: output did not match Quote schema:\n{err}")
-            if validation_failures >= MAX_VALIDATION_ATTEMPTS:
-                print("Flag for review: model output failed validation twice. Not retrying.")
-                sys.exit(1)
+        except (ResponseError, ValidationError) as err:
+            # ollama raises ResponseError for HTTP errors, and a pydantic ValidationError
+            # when the server's reply isn't a chat response at all (e.g. a wrong API route).
+            print(f"Attempt {attempt}/{MAX_ATTEMPTS}: server replied with an error instead of a chat message:\n{err}")
         else:
-            print("VALIDATED:", quote_result)
-            break
+            # 2. Check the model's output against the Quote schema.
+            print("RAW:", raw)
+            try:
+                quote_result = Quote.model_validate_json(raw)
+            except ValidationError as err:
+                validation_failures += 1
+                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: output did not match Quote schema:\n{err}")
+                if validation_failures >= MAX_VALIDATION_ATTEMPTS:
+                    print("Flag for review: model output failed validation twice. Not retrying.")
+                    sys.exit(1)
+            else:
+                print("VALIDATED:", quote_result)
+                break
 
         if attempt < MAX_ATTEMPTS:
             time.sleep(RETRY_DELAY)
