@@ -25,3 +25,4 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 - Completed 1.6 (automated checks); decided one test method per contract case via a run_case helper rather than a subTest loop, so the count shows 10.
 - Completed 1.7 (consolidate): Milestone 1 done; rule adopted — every comparison gets an equal-values test.
 - Completed 2.3 (failure handling): model.py fails loudly with specific exceptions and bounded retries; decided validation errors get one retry and are flagged, never defaulted.
+- Completed 2.4 (context and request settings): Milestone 2 done; decided Mac runs LM Studio via the lmstudio SDK and Linux runs Ollama; rule adopted — temperature for consistency, prompt/schema for correctness.
