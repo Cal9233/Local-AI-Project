@@ -1,4 +1,4 @@
-from ollama import chat, ChatResponse, Client
+from ollama import ChatResponse, Client
 from pydantic import BaseModel, ValidationError
 from decimal import Decimal
 from enum import Enum
@@ -12,7 +12,6 @@ from pathlib import Path
 import lmstudio as lms
 
 BASE_DIR = Path(__file__).resolve().parent
-EMAIL_DIR = BASE_DIR / "data" / "sample_email.txt"
 os_name = platform.system()
 
 if os_name == "Darwin":
@@ -73,46 +72,62 @@ class Quote(BaseModel):
     unit_price: Decimal
     sale_basis: Sales
 
-def ask_model(quote_text):
+def ask_model(quote_text: str) -> str:
+    """Send SYSTEM_PROMPT_V1 and the quote as separate messages; return the raw reply text.
+
+    Only the request differs per machine: LM Studio on the Mac, Ollama on Linux.
+    """
     if os_name == "Darwin":
         model = lms.llm(LLM_MODEL)
         chat = lms.Chat(SYSTEM_PROMPT_V1)
         chat.add_user_message(quote_text)
-        response = model.respond(chat, response_format=Quote.model_json_schema())
-        print(response)
-    else:
-        client = Client(host=LLM_MODEL_HOST, timeout=TIMEOUT)
-        validation_failures = 0
+        result = model.respond(chat, response_format=Quote.model_json_schema())
+        return result.content
 
-        for attempt in range(1, MAX_ATTEMPTS + 1):
-            try:
-                response: ChatResponse = client.chat(
-                    model=LLM_MODEL,
-                    messages=[{'role': 'user', 'content': quote}],
-                    think=True,
-                    stream=False,
-                    format=Quote.model_json_schema()
-                )
-                print("RAW:", response.message.content)
-                quote_result = Quote.model_validate_json(response.message.content)
-            except ConnectionError:
-                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at localhost:{PORT}.")
-            except httpx.TimeoutException:
-                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: no response within {TIMEOUT}s (server reachable, generation too slow).")
-            except ValidationError as err:
-                validation_failures += 1
-                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: output did not match Quote schema:\n{err}")
-                if validation_failures >= MAX_VALIDATION_ATTEMPTS:
-                    print("Flag for review: model output failed validation twice. Not retrying.")
-                    sys.exit(1)
-            else:
-                print("VALIDATED:", quote_result)
-                break
+    client = Client(host=LLM_MODEL_HOST, timeout=TIMEOUT)
+    response: ChatResponse = client.chat(
+        model=LLM_MODEL,
+        messages=[
+            {'role': 'system', 'content': SYSTEM_PROMPT_V1},
+            {'role': 'user', 'content': quote_text},
+        ],
+        think=True,
+        stream=False,
+        format=Quote.model_json_schema()
+    )
+    return response.message.content
 
-            if attempt < MAX_ATTEMPTS:
-                time.sleep(RETRY_DELAY)
+
+def main():
+    validation_failures = 0
+
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            raw = ask_model(quote)
+            print("RAW:", raw)
+            quote_result = Quote.model_validate_json(raw)
+        except ConnectionError:
+            print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at {LLM_MODEL_HOST}.")
+        except httpx.TimeoutException:
+            print(f"Attempt {attempt}/{MAX_ATTEMPTS}: no response within {TIMEOUT}s (server reachable, generation too slow).")
+        except lms.LMStudioError as err:
+            print(f"Attempt {attempt}/{MAX_ATTEMPTS}: LM Studio request failed ({type(err).__name__}): {err}")
+        except ValidationError as err:
+            validation_failures += 1
+            print(f"Attempt {attempt}/{MAX_ATTEMPTS}: output did not match Quote schema:\n{err}")
+            if validation_failures >= MAX_VALIDATION_ATTEMPTS:
+                print("Flag for review: model output failed validation twice. Not retrying.")
+                sys.exit(1)
         else:
-            print(f"Gave up after {MAX_ATTEMPTS} attempts.")
-            sys.exit(1)
+            print("VALIDATED:", quote_result)
+            break
 
-ask_model(quote)
+        if attempt < MAX_ATTEMPTS:
+            time.sleep(RETRY_DELAY)
+    else:
+        print(f"Gave up after {MAX_ATTEMPTS} attempts.")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
