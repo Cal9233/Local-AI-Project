@@ -9,8 +9,10 @@ import os
 from dotenv import load_dotenv
 import platform
 from pathlib import Path
+import lmstudio as lms
 
-BASE_DIR = Path(__file__).resolve.parent
+BASE_DIR = Path(__file__).resolve().parent
+EMAIL_DIR = BASE_DIR / "data" / "sample_email.txt"
 os_name = platform.system()
 
 if os_name == "Darwin":
@@ -35,6 +37,20 @@ Lead time: Stock, ships same day
 Regards,
 Northwind Aero Spares"""
 
+SYSTEM_PROMPT_V1 = """You extract data from supplier quotes for Genthrust.
+Do not add fields of information that are not in the schema, do not make up your own information either if ambigous.
+
+Return only the fields in the schema. 
+Only use values that appear in the quote text.
+
+Condition codes:
+- OH = overhauled
+- SV = serviceable
+- NE = new
+- "Inspected/Tested" (IP) counts as SV.
+- If the quote does not clearly state a condition, use null.
+"""
+
 MAX_ATTEMPTS = 3
 MAX_VALIDATION_ATTEMPTS = 2
 TIMEOUT = 30
@@ -57,36 +73,46 @@ class Quote(BaseModel):
     unit_price: Decimal
     sale_basis: Sales
 
-client = Client(host=LLM_MODEL_HOST, timeout=TIMEOUT)
-validation_failures = 0
-
-for attempt in range(1, MAX_ATTEMPTS + 1):
-    try:
-        response: ChatResponse = client.chat(
-            model=LLM_MODEL,
-            messages=[{'role': 'user', 'content': quote}],
-            think=True,
-            stream=False,
-            format=Quote.model_json_schema()
-        )
-        print("RAW:", response.message.content)
-        quote_result = Quote.model_validate_json(response.message.content)
-    except ConnectionError:
-        print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at localhost:{PORT}.")
-    except httpx.TimeoutException:
-         print(f"Attempt {attempt}/{MAX_ATTEMPTS}: no response within {TIMEOUT}s (server reachable, generation too slow).")
-    except ValidationError as err:
-        validation_failures += 1
-        print(f"Attempt {attempt}/{MAX_ATTEMPTS}: output did not match Quote schema:\n{err}")
-        if validation_failures >= MAX_VALIDATION_ATTEMPTS:
-            print("Flag for review: model output failed validation twice. Not retrying.")
-            sys.exit(1)
+def ask_model(quote_text):
+    if os_name == "Darwin":
+        model = lms.llm(LLM_MODEL)
+        chat = lms.Chat(SYSTEM_PROMPT_V1)
+        chat.add_user_message(quote_text)
+        response = model.respond(chat, response_format=Quote.model_json_schema())
+        print(response)
     else:
-        print("VALIDATED:", quote_result)
-        break
+        client = Client(host=LLM_MODEL_HOST, timeout=TIMEOUT)
+        validation_failures = 0
 
-    if attempt < MAX_ATTEMPTS:
-        time.sleep(RETRY_DELAY)
-else:
-    print(f"Gave up after {MAX_ATTEMPTS} attempts.")
-    sys.exit(1)
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            try:
+                response: ChatResponse = client.chat(
+                    model=LLM_MODEL,
+                    messages=[{'role': 'user', 'content': quote}],
+                    think=True,
+                    stream=False,
+                    format=Quote.model_json_schema()
+                )
+                print("RAW:", response.message.content)
+                quote_result = Quote.model_validate_json(response.message.content)
+            except ConnectionError:
+                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at localhost:{PORT}.")
+            except httpx.TimeoutException:
+                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: no response within {TIMEOUT}s (server reachable, generation too slow).")
+            except ValidationError as err:
+                validation_failures += 1
+                print(f"Attempt {attempt}/{MAX_ATTEMPTS}: output did not match Quote schema:\n{err}")
+                if validation_failures >= MAX_VALIDATION_ATTEMPTS:
+                    print("Flag for review: model output failed validation twice. Not retrying.")
+                    sys.exit(1)
+            else:
+                print("VALIDATED:", quote_result)
+                break
+
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(RETRY_DELAY)
+        else:
+            print(f"Gave up after {MAX_ATTEMPTS} attempts.")
+            sys.exit(1)
+
+ask_model(quote)

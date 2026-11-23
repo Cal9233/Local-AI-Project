@@ -35,3 +35,10 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **My original explanation:** None recorded; the bug went unnoticed until code review.
 - **Corrected understanding:** The call used module-level `chat()`, which has its own default client with no timeout; only `client.chat()` uses the configured one. Found by reading the code, confirmed with `timeout=0.5` raising `httpx.ReadTimeout`.
 - **Rule going forward:** An unused variable or import is a hint that the wiring is wrong.
+
+## 2026-11-23 — System prompt silently dropped (Lesson 2.4)
+
+- **Symptom:** With the role prompt "added", the run still returned `condition: NE`; no error.
+- **My original explanation:** Assumed the prompt was being sent and asked whether the code was correct.
+- **Corrected understanding:** `lms.Chat(prompt).from_history(text)` calls a classmethod that builds a brand-new chat from the text alone, discarding the instance holding the system prompt. Fix: `chat = lms.Chat(prompt)` then `chat.add_user_message(text)`. Related on the same day: `ollama.Client` sent `POST /api/chat` to LM Studio (config picked the host, not the API format), and `csv.reader` on a plain-text email would split `9,850.00` at the comma.
+- **Rule going forward:** When an instruction seems to have no effect, first confirm it was actually sent (`print(chat)`), then judge the model.
