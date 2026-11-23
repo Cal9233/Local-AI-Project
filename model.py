@@ -5,6 +5,22 @@ from enum import Enum
 import sys
 import httpx
 import time
+import os
+from dotenv import load_dotenv
+import platform
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve.parent
+os_name = platform.system()
+
+if os_name == "Darwin":
+    load_dotenv(BASE_DIR / ".env.mac", override=True)
+elif os_name == "Linux":
+    load_dotenv(BASE_DIR / ".env.linux", override=True)
+
+LLM_MODEL_HOST = os.getenv("MODEL_HOST")
+LLM_MODEL = os.getenv("MODEL")
+PORT = os.getenv("PORT")
 
 quote = """Hi,
 
@@ -41,14 +57,13 @@ class Quote(BaseModel):
     unit_price: Decimal
     sale_basis: Sales
 
-client = Client(host="http://localhost:11434", timeout=TIMEOUT)
+client = Client(host=LLM_MODEL_HOST, timeout=TIMEOUT)
 validation_failures = 0
 
 for attempt in range(1, MAX_ATTEMPTS + 1):
     try:
         response: ChatResponse = client.chat(
-            model='qwen3.5:9b', # Linux WorkStation
-            # model='qwen/qwen3-14b', # Macbook WorkStation
+            model=LLM_MODEL,
             messages=[{'role': 'user', 'content': quote}],
             think=True,
             stream=False,
@@ -57,7 +72,7 @@ for attempt in range(1, MAX_ATTEMPTS + 1):
         print("RAW:", response.message.content)
         quote_result = Quote.model_validate_json(response.message.content)
     except ConnectionError:
-        print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at localhost:11434.")
+        print(f"Attempt {attempt}/{MAX_ATTEMPTS}: model server not reachable at localhost:{PORT}.")
     except httpx.TimeoutException:
          print(f"Attempt {attempt}/{MAX_ATTEMPTS}: no response within {TIMEOUT}s (server reachable, generation too slow).")
     except ValidationError as err:
