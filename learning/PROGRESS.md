@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 3.1 — Design the table
+**Current lesson:** 3.2 — Load and query
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -22,10 +22,10 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [x] 2.1 Reach the model service — 2026-11-12: `model.py` sends one chat request to `qwen3.5:9b` via the ollama client to `localhost:11434`; identified `message.content` vs `thinking`, ns durations, token counts (`eval_count` includes thinking). Checkpoint: predicted connection error with server off; explained remote host change (`Client(host=...)`/`OLLAMA_HOST`, bind 0.0.0.0); log `model`, verify content against source.
 - [x] 2.2 Structured extraction — 2026-11-21: Enum-constrained Quote with Decimal price; showed valid-but-wrong (SV for "Inspected/Tested"; 0.00 price on 1 of 3 runs); explained schema checks shape, not truth vs source.
 - [x] 2.3 Failure handling — 2026-11-22: predicted and confirmed server-off run (3 attempts, "Gave up", exit 1; server-on exit 0); found chat() outside try, finally→else NameError, exit-0-hides-failure, module chat() ignoring Client timeout; caught httpx.TimeoutException (pinned httpx==0.28.1). Retry loop written by Claude on request; learner explained for/else and sys.exit-in-loop. Not run: validation flag branch, timed run.
-- [x] 2.4 Context and request settings — 2026-11-23: system prompt separate from quote (lms.Chat + add_user_message); condition SV 1/5 (no prompt) → 5/7 (role) → 4/4 (V1 rules), reproduced 2/2 by Claude; summary of sample_email.txt checked against 11 figures (missed condition, RFQ; "per unit" wrong); temperature 0.8→0.6 changed wording not facts. Checkpoint: predicted null for "As Removed"; gap: thought temperature = effort and that temp 0 would give the correct answer. Mac now on LM Studio (lmstudio SDK); retry loop still Linux-only.
+- [x] 2.4 Context and request settings — 2026-11-23: system prompt separate from quote (lms.Chat + add_user_message); condition SV 1/5 (no prompt) → 5/7 (role) → 4/4 (V1 rules), reproduced 2/2 by Claude; summary of sample_email.txt checked against 11 figures (missed condition, RFQ; "per unit" wrong); temperature 0.8→0.6 changed wording not facts. Checkpoint: predicted null for "As Removed"; gap: thought temperature = effort and that temp 0 would give the correct answer. Mac now on LM Studio (lmstudio SDK); retry loop originally Linux-only, since shared across Mac and Linux (PR #2).
 
 ## Milestone 3 — SQLite storage
-- [ ] 3.1 Design the table
+- [x] 3.1 Design the table — 2026-11-23: `schema.sql` (id PK, `UNIQUE(quote_id, supplier)`, `typeof` + `> 0` checks, enum-style `IN` checks, file/row/created_at traceability, nullable `quote_date`); 9/9 accept/reject cases. Defended in `/arch`. Gap: predicted affinity text `'3'` rejected (fixed on retry); lead-time transfer needed the answer (`IS NULL OR ...`, `>= 0` boundary).
 - [ ] 3.2 Load and query
 - [ ] 3.3 Grow the schema
 

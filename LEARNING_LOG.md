@@ -26,3 +26,6 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 - Completed 1.7 (consolidate): Milestone 1 done; rule adopted — every comparison gets an equal-values test.
 - Completed 2.3 (failure handling): model.py fails loudly with specific exceptions and bounded retries; decided validation errors get one retry and are flagged, never defaulted.
 - Completed 2.4 (context and request settings): Milestone 2 done; decided Mac runs LM Studio via the lmstudio SDK and Linux runs Ollama; rule adopted — temperature for consistency, prompt/schema for correctness.
+
+## 2026-11-23
+- Completed 3.1 (design the table): first SQLite schema; learned SQLite type affinity differs from MySQL (`INTEGER` converts `'3'` before CHECK runs); decided `UNIQUE(quote_id, supplier)` because suppliers assign quote numbers.
