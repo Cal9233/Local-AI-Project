@@ -26,7 +26,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
 ## Milestone 3 — SQLite storage
 - [x] 3.1 Design the table — 2026-11-23: `schema.sql` (id PK, `UNIQUE(quote_id, supplier)`, `typeof` + `> 0` checks, enum-style `IN` checks, file/row/created_at traceability, nullable `quote_date`); 9/9 accept/reject cases. Defended in `/arch`. Gap: predicted affinity text `'3'` rejected (fixed on retry); lead-time transfer needed the answer (`IS NULL OR ...`, `>= 0` boundary).
-- [ ] 3.2 Load and query
+- [~] 3.2 Load and query — 2026-11-23: import done and rerun-safe (ON CONFLICT DO NOTHING, chosen over INSERT OR IGNORE after seeing it hide a CHECK failure); functions split out. Next: find_cheapest_sql returns the main.py dict, then filter_by_part_number_sql, then T01–T10 on an in-memory DB.
 - [ ] 3.3 Grow the schema
 
 ## Milestone 4 — Quote extraction pipeline
