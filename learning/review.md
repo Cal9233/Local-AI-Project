@@ -22,3 +22,10 @@ Keep short retrieval prompts or review metadata for meaningful topics.
 - **Last reviewed:** 2026-11-23 (2.4 checkpoint; first answered "temperature = effort" and "maybe SV")
 - **Confidence:** low
 - **Next review or exercise:** run the no-prompt baseline at temperature 0 five times; predict the value first.
+
+## 2026-11-23: SQLite type affinity and optional-value CHECKs
+
+- **Recall prompt:** Why does the text `'3'` pass `CHECK (typeof(quantity) = 'integer')` on an `INTEGER` column while `'abc'` fails? Write a `CHECK` for an optional, non-negative whole number (e.g. lead time in days).
+- **Last reviewed:** 2026-11-23 (3.1 checkpoint; predicted `'3'` rejected, corrected on retry; lead-time CHECK needed the answer)
+- **Confidence:** low
+- **Next review or exercise:** predict, then test, inserts of NULL, 0, -1, '7', 'abc' against your own optional-column CHECK; test the exact boundary value first.

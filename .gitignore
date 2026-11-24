@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .vscode/
 .env
+# Generated SQLite database (rebuilt by database.py)
+*.db
