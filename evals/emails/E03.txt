@@ -1,0 +1,15 @@
+From: quotes@fabrikam-aviation.example
+Subject: RE: RFQ 2026-1201 (2 items)
+
+Hello,
+
+Please see our offer below. All prices USD, outright.
+
+Item 1: TRAIN-PN-011  Qty 6 EA  Cond: SV   USD 420.00/ea
+Item 2: TRAIN-PN-012  Qty 1 EA  Cond: OH   USD 12,900.00/ea
+
+Both items in stock, 8130-3 tags available.
+
+Thanks,
+Morgan
+Fabrikam Aviation Supply (fictional)

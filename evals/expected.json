@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "description": "Hand-checked expected quote records for fictional supplier emails in evals/emails/. All suppliers, parts, and prices are invented.",
+  "rules": {
+    "records": "One record per offer a buyer could accept on its own. An email with no offer has zero records.",
+    "quantity": "Units in stock now. Units in repair or 'available later' are not counted.",
+    "unit_price": "Price per unit as a two-decimal string, never a float. If the email gives a lot total, divide by quantity.",
+    "unknown": "A field the email does not state is null. Never infer it (e.g. no currency symbol -> currency null).",
+    "condition": "OH = overhauled, SV = serviceable (incl. Inspected/Tested), NE = new. As-removed/untested or unstated -> null.",
+    "core_charge": "Amount owed only if the exchange core is not returned or is BER. Two-decimal string; null for outright offers.",
+    "split": "dev cases may be used while writing prompts; held_out cases are scored only, never used to tune prompts."
+  },
+  "cases": [
+    {
+      "id": "E01",
+      "file": "emails/E01.txt",
+      "split": "dev",
+      "tags": ["exchange", "core_charge", "two_line_items", "future_stock"],
+      "records": [
+        {"part_number": "TRAIN-PN-007", "quantity": 2, "condition": "OH", "unit_price": "9850.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null},
+        {"part_number": "TRAIN-PN-007", "quantity": 1, "condition": null, "unit_price": "4200.00", "currency": "USD", "sale_basis": "EXCHANGE", "core_charge": "6500.00"}
+      ],
+      "notes": "Third unit is in the shop (~3 weeks), not in stock, so outright quantity is 2. Exchange unit's condition is never stated."
+    },
+    {
+      "id": "E02",
+      "file": "emails/E02.txt",
+      "split": "dev",
+      "tags": ["eur", "european_number_format"],
+      "records": [
+        {"part_number": "TRAIN-PN-010", "quantity": 4, "condition": "NE", "unit_price": "3450.00", "currency": "EUR", "sale_basis": "OUTRIGHT", "core_charge": null}
+      ],
+      "notes": "'3.450,00' uses '.' for thousands and ',' for decimals: 3450.00, not 3.45."
+    },
+    {
+      "id": "E03",
+      "file": "emails/E03.txt",
+      "split": "dev",
+      "tags": ["two_line_items", "different_parts"],
+      "records": [
+        {"part_number": "TRAIN-PN-011", "quantity": 6, "condition": "SV", "unit_price": "420.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null},
+        {"part_number": "TRAIN-PN-012", "quantity": 1, "condition": "OH", "unit_price": "12900.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null}
+      ],
+      "notes": "Currency and sale basis are stated once for both items."
+    },
+    {
+      "id": "E04",
+      "file": "emails/E04.txt",
+      "split": "dev",
+      "tags": ["ambiguous_condition"],
+      "records": [
+        {"part_number": "TRAIN-PN-013", "quantity": 2, "condition": null, "unit_price": "1150.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null}
+      ],
+      "notes": "As removed, untested, no tags: not SV. Condition stays null."
+    },
+    {
+      "id": "E05",
+      "file": "emails/E05.txt",
+      "split": "dev",
+      "tags": ["missing_currency"],
+      "records": [
+        {"part_number": "TRAIN-PN-014", "quantity": 3, "condition": "OH", "unit_price": "2750.00", "currency": null, "sale_basis": "OUTRIGHT", "core_charge": null}
+      ],
+      "notes": "No currency anywhere. Do not assume USD. In 4.2 this record must be flagged before ranking."
+    },
+    {
+      "id": "E06",
+      "file": "emails/E06.txt",
+      "split": "dev",
+      "tags": ["lot_total_price"],
+      "records": [
+        {"part_number": "TRAIN-PN-004", "quantity": 3, "condition": "SV", "unit_price": "4875.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null}
+      ],
+      "notes": "14,625.00 is the total for 3 units; unit price is 4875.00. The arithmetic belongs in code, not the model (see 4.2)."
+    },
+    {
+      "id": "E07",
+      "file": "emails/E07.txt",
+      "split": "held_out",
+      "tags": ["exchange", "eur", "european_number_format", "core_charge"],
+      "records": [
+        {"part_number": "TRAIN-PN-015", "quantity": 1, "condition": "OH", "unit_price": "2100.00", "currency": "EUR", "sale_basis": "EXCHANGE", "core_charge": "8900.00"}
+      ]
+    },
+    {
+      "id": "E08",
+      "file": "emails/E08.txt",
+      "split": "held_out",
+      "tags": ["no_offer", "distractor_price"],
+      "records": [],
+      "notes": "No stock. The USD 5,300.00 is a past sale, not an offer."
+    }
+  ]
+}
