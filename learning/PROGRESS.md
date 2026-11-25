@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 3.2 — Load and query
+**Current lesson:** 4.1 — Checked extraction examples
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -26,11 +26,11 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
 ## Milestone 3 — SQLite storage
 - [x] 3.1 Design the table — 2026-11-23: `schema.sql` (id PK, `UNIQUE(quote_id, supplier)`, `typeof` + `> 0` checks, enum-style `IN` checks, file/row/created_at traceability, nullable `quote_date`); 9/9 accept/reject cases. Defended in `/arch`. Gap: predicted affinity text `'3'` rejected (fixed on retry); lead-time transfer needed the answer (`IS NULL OR ...`, `>= 0` boundary).
-- [~] 3.2 Load and query — 2026-11-23: import done and rerun-safe (ON CONFLICT DO NOTHING, chosen over INSERT OR IGNORE after seeing it hide a CHECK failure); functions split out. Next: find_cheapest_sql returns the main.py dict, then filter_by_part_number_sql, then T01–T10 on an in-memory DB.
-- [ ] 3.3 Grow the schema
+- [~] 3.2 Load and query — 2026-11-23: import done and rerun-safe (ON CONFLICT DO NOTHING, chosen over INSERT OR IGNORE after seeing it hide a CHECK failure); functions split out. 2026-11-24: `find_cheapest_sql` (two queries, option A: eligible list ORDER BY row_number, winner ORDER BY unit_price, quote_id LIMIT 1) written by Claude on request; matches T02 + no-match. Learner wrote `filter_by_part_number_sql` (matches T01/T10), debugging KeyError (requested_quantity), double fetchall, one-item tuple binding (12 bindings), `AND` vs `,` in SELECT. **Parked 2026-11-24** to start model work; resume before 4.2. Left: add ORDER BY row_number to filter; TestContractSQL subclass running T01–T10 on :memory:; show import twice stores each quote once.
+- [ ] 3.3 Grow the schema — deferred 2026-11-24 (not needed for extraction)
 
 ## Milestone 4 — Quote extraction pipeline
-- [ ] 4.1 Checked extraction examples
+- [~] 4.1 Checked extraction examples — started 2026-11-24
 - [ ] 4.2 Extract → validate → store with source
 - [ ] 4.3 Text-based PDFs
 - [ ] 4.4 Model comparison (local and hosted)

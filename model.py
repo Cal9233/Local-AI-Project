@@ -1,5 +1,5 @@
 from ollama import ChatResponse, Client, ResponseError
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 from decimal import Decimal
 from enum import Enum
 import sys
@@ -50,13 +50,22 @@ class Sales(str, Enum):
     OUTRIGHT = "OUTRIGHT"
     EXCHANGE = "EXCHANGE"
 
+class PriceBasis(str, Enum):
+    PER_UNIT = "PER_UNIT"
+    WHOLE_LOT = "LOT"
+
 class Quote(BaseModel):
     part_number: str
-    quantity: int
+    quantity: int = Field(gt=0)
     condition: Conditions | None
-    currency: str
-    unit_price: Decimal
+    currency: str | None
+    price: Decimal = Field(gt=0)
+    price_basis: PriceBasis
     sale_basis: Sales
+    core_charge: Decimal | None = Field(gt=0)
+
+class QuoteWrapper(BaseModel):
+    quote_list: list[Quote]
 
 def ask_model(quote_text: str) -> str:
     """Send SYSTEM_PROMPT_V1 and the quote as separate messages; return the raw reply text.
