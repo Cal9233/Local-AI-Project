@@ -35,10 +35,30 @@ def import_quotes(conn, csv_path):
     conn.commit()
 
 def filter_by_part_number_sql(conn, part_number):
-    return
+    sql = "SELECT quote_id, part_number FROM quotes WHERE part_number = ?"
+    res = conn.cursor().execute(sql, (part_number,))
+    result = [row[0] for row in res.fetchall()]
+    return result
 
 def find_cheapest_sql(conn, request):
-    select_sql = "SELECT quote_id, unit_price FROM quotes WHERE part_number = ? AND condition = ? AND currency = ? AND sale_basis = ? AND quantity >= ? ORDER BY unit_price, quote_id LIMIT 1"
+    where = "WHERE part_number = ? AND condition = ? AND currency = ? AND sale_basis = ? AND quantity >= ?"
+    params = (request["part_number"], request["condition"], request["currency"], request["sale_basis"], request["requested_quantity"])
+    cur = conn.cursor()
+
+    # Query 1: every eligible quote, in CSV order (traceability).
+    eligible_ids = [row[0] for row in cur.execute(f"SELECT quote_id FROM quotes {where} ORDER BY row_number", params).fetchall()]
+
+    # Query 2: the winner — ranking rule (price, then quote_id) lives in SQL.
+    best = cur.execute(f"SELECT quote_id, unit_price FROM quotes {where} ORDER BY unit_price, quote_id LIMIT 1", params).fetchone()
+
+    if best is None:
+        return {"status": "no_eligible_quote", "eligible_quote_ids": [], "best_quote_id": None, "unit_price": None, "line_total": None}
+
+    best_id, price_cents = best
+    unit_price = Decimal(price_cents) / 100
+    line_total = unit_price * request["requested_quantity"]
+    cents = Decimal("0.01")
+    return {"status": "found", "eligible_quote_ids": eligible_ids, "best_quote_id": best_id, "unit_price": str(unit_price.quantize(cents)), "line_total": str(line_total.quantize(cents))}
 
 
 def main():

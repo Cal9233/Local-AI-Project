@@ -1,0 +1,15 @@
+From: sales@northwind-spares.example
+Subject: RFQ response TRAIN-PN-004
+
+Hi,
+
+Thanks for your RFQ. We can offer the following:
+
+P/N: TRAIN-PN-004
+Qty: 3 EA
+Condition: Serviceable (SV), tags from our repair station
+Price: USD 14,625.00 total for the lot, outright sale
+Lead time: Stock, ships same day
+
+Regards,
+Northwind Aero Spares (fictional)
