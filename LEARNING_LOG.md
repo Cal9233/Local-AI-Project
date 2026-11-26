@@ -32,3 +32,7 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 
 ## 2026-11-25
 - Completed 3.2 (load and query): SQL backend passes the same contract as Python; learned that DO NOTHING silently drops supplier corrections.
+
+## 2026-11-26
+- Completed 4.1 (checked extraction examples): eval set of 8 fictional emails; learned that schema-valid ≠ correct (3.45 vs 3450.00) and that a held-out case used for tuning must move to dev and be replaced.
+- Completed 4.2 (extract → validate → store): unrankable quotes go to `review_quotes` with source phrase; learned a phrase check proves text exists, not that it describes this record (E01 exchange unit got an invented OH and was ranked).
