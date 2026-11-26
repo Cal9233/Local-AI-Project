@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 4.1 — Checked extraction examples
+**Current lesson:** 4.4 — Model comparison (local and hosted) (calendar order; 4.3 is weeks 9–12). Before starting: grow held-out emails toward 20; read `extraction.py` and `evals/run_eval.py`.
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -30,8 +30,8 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [ ] 3.3 Grow the schema — deferred 2026-11-24 (not needed for extraction)
 
 ## Milestone 4 — Quote extraction pipeline
-- [~] 4.1 Checked extraction examples — started 2026-11-24
-- [ ] 4.2 Extract → validate → store with source
+- [x] 4.1 Checked extraction examples — 2026-11-26: 8 emails (6 dev / 2 held out) cover EXCHANGE, EUR, ambiguous condition, two line items, core charge, missing currency, lot total, no-offer; E06 hand-checked (4875.00). Grow held-out toward 20 before 4.4.
+- [x] 4.2 Extract → validate → store with source — 2026-11-26: E05 stored in `review_quotes` with price 2750.00, phrase and `missing_currency`, never ranked; field accuracy qwen3.5:9b V2 ×3: dev 100% except condition 23/24, held-out 100%; TIMEOUT 30→60 (learner). Design by learner (separate review table, optional price, review before `unit_price`, rule by data not case ID); code written by Claude on request. Checkpoint: whitespace-normalized phrase match (corrected after reading), `condition_phrase` transfer, GBP → `unsupported_currency`.
 - [ ] 4.3 Text-based PDFs
 - [ ] 4.4 Model comparison (local and hosted)
 

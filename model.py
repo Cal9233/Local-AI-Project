@@ -4,10 +4,13 @@ from decimal import Decimal
 from enum import Enum
 import sys
 import httpx
+import logging
 import time
 import lmstudio as lms
 
 from config import OS_NAME, LLM_MODEL_HOST, LLM_MODEL
+
+logger = logging.getLogger(__name__)
 
 quote = """Hi,
 
@@ -36,9 +39,30 @@ Condition codes:
 - If the quote does not clearly state a condition, use null.
 """
 
+# V2 (lesson 4.2): several records per email, null price allowed, and an exact
+# supporting phrase that code checks against the email.
+SYSTEM_PROMPT_V2 = """You extract offers from aircraft-parts supplier emails.
+Return {"quote_list": [...]} with one record per offer the buyer could accept on its own.
+If the email makes no offer (e.g. no stock), return an empty quote_list.
+
+Rules:
+- Only use values that appear in the email. Never guess. If a field is not stated, use null.
+- part_number: exactly as written.
+- quantity: units in stock now; do not count units in repair or available later.
+- condition: OH = overhauled, SV = serviceable (incl. "Inspected/Tested"), NE = new.
+  As-removed, untested, or not stated -> null.
+- currency: the ISO code (USD or EUR) only if the email states it; otherwise null.
+- price: the number as a plain decimal (e.g. 3.450,00 -> 3450.00); null if no price is stated.
+- price_basis: PER_UNIT if the price is per unit/each, LOT if it is a total for all units.
+- sale_basis: OUTRIGHT or EXCHANGE. For exchanges, price is the exchange fee.
+- core_charge: the amount owed if an exchange core is not returned; null for outright offers.
+- price_phrase: copy the exact words from the email that state the price, character for character.
+  null if no price is stated.
+"""
+PROMPT_VERSION = "V2"
 MAX_ATTEMPTS = 3
 MAX_VALIDATION_ATTEMPTS = 2
-TIMEOUT = 30
+TIMEOUT = 60
 RETRY_DELAY = 2
 
 class Conditions(str, Enum):
@@ -59,38 +83,65 @@ class Quote(BaseModel):
     quantity: int = Field(gt=0)
     condition: Conditions | None
     currency: str | None
-    price: Decimal = Field(gt=0)
+    # None = the email states no price; such quotes go to human review, never ranking.
+    price: Decimal | None = Field(gt=0)
     price_basis: PriceBasis
     sale_basis: Sales
     core_charge: Decimal | None = Field(gt=0)
+    # Exact text supporting the price. Code checks it appears in the source email;
+    # a valid schema does not prove the model copied it faithfully.
+    price_phrase: str | None
 
 class QuoteWrapper(BaseModel):
     quote_list: list[Quote]
 
-def ask_model(quote_text: str) -> str:
-    """Send SYSTEM_PROMPT_V1 and the quote as separate messages; return the raw reply text.
+def ask_model(
+    quote_text: str,
+    system_prompt: str = SYSTEM_PROMPT_V1,
+    response_model: type[BaseModel] = Quote,
+) -> str:
+    """Send the system prompt and the quote as separate messages; return the raw reply text.
 
     Only the request differs per machine: LM Studio on the Mac, Ollama on Linux.
     """
     if OS_NAME == "Darwin":
         model = lms.llm(LLM_MODEL)
-        chat = lms.Chat(SYSTEM_PROMPT_V1)
+        chat = lms.Chat(system_prompt)
         chat.add_user_message(quote_text)
-        result = model.respond(chat, response_format=Quote.model_json_schema())
+        result = model.respond(chat, response_format=response_model.model_json_schema())
         return result.content
 
     client = Client(host=LLM_MODEL_HOST, timeout=TIMEOUT)
     response: ChatResponse = client.chat(
         model=LLM_MODEL,
         messages=[
-            {'role': 'system', 'content': SYSTEM_PROMPT_V1},
+            {'role': 'system', 'content': system_prompt},
             {'role': 'user', 'content': quote_text},
         ],
         think=True,
         stream=False,
-        format=Quote.model_json_schema()
+        format=response_model.model_json_schema()
     )
     return response.message.content
+
+
+def extract_quotes(email_text: str) -> list[Quote]:
+    """Extract every offer in one email with SYSTEM_PROMPT_V2.
+
+    Returns:
+        The validated quotes (empty if the email makes no offer).
+
+    Raises:
+        pydantic.ValidationError: the reply does not match QuoteWrapper.
+        httpx.TimeoutException / ollama.ResponseError: transport failures.
+    """
+    start = time.perf_counter()
+    raw = ask_model(email_text, SYSTEM_PROMPT_V2, QuoteWrapper)
+    logger.info(
+        "model call model=%s prompt=%s latency=%.1fs",
+        LLM_MODEL, PROMPT_VERSION, time.perf_counter() - start,
+    )
+    return QuoteWrapper.model_validate_json(raw).quote_list
 
 
 def main():
