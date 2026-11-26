@@ -29,3 +29,6 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 
 ## 2026-11-23
 - Completed 3.1 (design the table): first SQLite schema; learned SQLite type affinity differs from MySQL (`INTEGER` converts `'3'` before CHECK runs); decided `UNIQUE(quote_id, supplier)` because suppliers assign quote numbers.
+
+## 2026-11-25
+- Completed 3.2 (load and query): SQL backend passes the same contract as Python; learned that DO NOTHING silently drops supplier corrections.

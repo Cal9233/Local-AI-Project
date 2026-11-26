@@ -2,6 +2,7 @@ import json
 import unittest
 from decimal import Decimal
 from pathlib import Path
+import sqlite3
 
 from main import (
     file_dir,
@@ -9,6 +10,13 @@ from main import (
     find_cheapest_eligible_quote,
     load_quotes,
     validate_request,
+)
+
+from database import (
+    create_db, 
+    import_quotes, 
+    filter_by_part_number_sql,
+    find_cheapest_sql
 )
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -41,23 +49,27 @@ class TestLoadQuotes(unittest.TestCase):
 class TestContract(unittest.TestCase):
     """Acceptance tests: every case T01-T10 in data/expected_results.json."""
 
+    filter_by_part_number = staticmethod(filter_by_part_number)
+    find_cheapest_eligible_quote = staticmethod(find_cheapest_eligible_quote)
+
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         with open(CONTRACT_PATH, "r", encoding="utf-8") as f:
             contract = json.load(f)
         cls.cases = contract["test_cases"]
-        cls.quotes = load_quotes(DATA_DIR / contract["dataset_file"])
-
+        cls.source = load_quotes(DATA_DIR / contract["dataset_file"])
+    
     def run_case(self, case_id):
         case = [i for i in self.cases if i["id"] == case_id].pop(0)
         if case["action"] == "filter_by_part_number":
             actual = {
-                "matching_quote_ids": filter_by_part_number(
-                    self.quotes, case["input"]["part_number"]
+                "matching_quote_ids": self.filter_by_part_number(
+                    self.source, case["input"]["part_number"]
                 )
             }
         elif case["action"] == "find_cheapest_eligible_quote":
-            actual = find_cheapest_eligible_quote(self.quotes, case["input"])
+            actual = self.find_cheapest_eligible_quote(self.source, case["input"])
         else:
             self.fail(f"unknown action {case['action']!r}")
         self.assertEqual(actual, case["expected"])
@@ -116,6 +128,34 @@ class TestValidateRequest(unittest.TestCase):
         for bad in ("2", 1.5):
             with self.subTest(qty=bad), self.assertRaises(ValueError):
                 validate_request(self.base_request(bad))
+
+class TestContractSQL(TestContract):
+    """Acceptance tests T01-T10 again, with SQLite as the backend.
+
+    Inherits run_case and test_T01..T10; only the functions and the source differ.
+    """
+
+    filter_by_part_number = staticmethod(filter_by_part_number_sql)
+    find_cheapest_eligible_quote = staticmethod(find_cheapest_sql)
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()  # loads cls.cases (and a list source we replace)
+        cls.csv_path = DATA_DIR / "sample_quotes.csv"
+        cls.conn = sqlite3.connect(":memory:")  # never touch the real quotes.db
+        create_db(cls.conn)
+        import_quotes(cls.conn, cls.csv_path)
+        cls.source = cls.conn
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.conn.close()
+        super().tearDownClass()
+
+    def test_import_twice_stores_each_quote_once(self):
+        import_quotes(self.conn, self.csv_path)
+        (count,) = self.conn.execute("SELECT COUNT(*) FROM quotes").fetchone()
+        self.assertEqual(count, len(load_quotes(self.csv_path)))
 
 
 if __name__ == "__main__":
