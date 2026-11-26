@@ -21,7 +21,6 @@ def load_quotes(path):
         return data
 
 
-
 def create_db(conn):
     cur = conn.cursor()
     cur.executescript(table_schema)
@@ -35,7 +34,7 @@ def import_quotes(conn, csv_path):
     conn.commit()
 
 def filter_by_part_number_sql(conn, part_number):
-    sql = "SELECT quote_id, part_number FROM quotes WHERE part_number = ?"
+    sql = "SELECT quote_id, part_number FROM quotes WHERE part_number = ? ORDER BY row_number"
     res = conn.cursor().execute(sql, (part_number,))
     result = [row[0] for row in res.fetchall()]
     return result
