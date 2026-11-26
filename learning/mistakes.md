@@ -42,3 +42,10 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **My original explanation:** Assumed the prompt was being sent and asked whether the code was correct.
 - **Corrected understanding:** `lms.Chat(prompt).from_history(text)` calls a classmethod that builds a brand-new chat from the text alone, discarding the instance holding the system prompt. Fix: `chat = lms.Chat(prompt)` then `chat.add_user_message(text)`. Related on the same day: `ollama.Client` sent `POST /api/chat` to LM Studio (config picked the host, not the API format), and `csv.reader` on a plain-text email would split `9,850.00` at the comma.
 - **Rule going forward:** When an instruction seems to have no effect, first confirm it was actually sent (`print(chat)`), then judge the model.
+
+## 2026-11-25 — staticmethod wrapped the wrong thing (Lesson 3.2)
+
+- **Symptom:** 10 contract tests failed with `{'matching_quote_ids': <staticmethod([])>} != {'matching_quote_ids': []}`; a later version passed only because the wrapper did nothing.
+- **My original explanation:** Wrapped function *results* (and `load_quotes` in a local variable inside `setUpClass`) in `staticmethod(...)`.
+- **Corrected understanding:** `staticmethod` only matters for an uncalled function object assigned as a class attribute in the class body; it stops `self` being passed. Call it as `self.<attr>(...)` so a subclass override is picked up — a bare name resolves in the module, never on the class.
+- **Rule going forward:** To make behavior swappable in a subclass, store it as a class attribute and always reach it through `self.`.
