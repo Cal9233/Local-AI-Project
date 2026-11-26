@@ -49,3 +49,17 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **My original explanation:** Wrapped function *results* (and `load_quotes` in a local variable inside `setUpClass`) in `staticmethod(...)`.
 - **Corrected understanding:** `staticmethod` only matters for an uncalled function object assigned as a class attribute in the class body; it stops `self` being passed. Call it as `self.<attr>(...)` so a subclass override is picked up — a bare name resolves in the module, never on the class.
 - **Rule going forward:** To make behavior swappable in a subclass, store it as a class attribute and always reach it through `self.`.
+
+## 2026-11-26 — Split one offer into two records, invented a condition code (Lesson 4.1)
+
+- **Symptom:** For "2 EA OH exchange USD 1,200 each, USD 5,000 core charge; 1 EA as-removed USD 800 outright", wrote 3 records: exchange without core, exchange with core, and as-removed with condition `AR`.
+- **My original explanation:** Treated the core charge as a separate offer, and used `AR` for as-removed.
+- **Corrected understanding:** A record is one offer a buyer can accept on its own; the core charge is a term of the exchange offer, so it is a field on that record (2 records total). Condition allows only OH/SV/NE; as-removed or unstated → `null`, never a new code.
+- **Rule going forward:** Before writing a record, check it against the `rules` in `evals/expected.json`; anything outside the allowed values is unknown (`null`), not invented.
+
+## 2026-11-26 — Predicted a line-broken phrase would go to review (Lesson 4.2)
+
+- **Symptom:** Asked where an E06 quote lands if its price phrase is split by a line break in the email; answered `review_quotes`.
+- **My original explanation:** Text that doesn't match exactly fails the phrase check.
+- **Corrected understanding:** `phrase_in_source` calls `_normalize`, which collapses all whitespace (including line breaks) on both sides first, so the phrase matches and the quote is ranked (`unit_price` 487500 cents).
+- **Rule going forward:** Read the checking function before predicting its result.
