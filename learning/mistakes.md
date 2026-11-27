@@ -78,3 +78,9 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **Corrected understanding:** First add a dev email with its expected result and confirm it fails on the current prompt; then change prompt or schema, check dev, score held-out once. Also: quantity 0 fails `Field(gt=0)` and loses the whole email; no stock now means no record.
 - **Rule going forward:** Failing eval case → confirm it fails → change → dev → held-out once.
 
+## 2026-11-27 — Unquoted dict keys (Lesson 5)
+
+- **Symptom:** `request = {part_number: part_number, ...}` → `KeyError: 'requested_quantity'` in `validate_request` (same error seen in 3.2).
+- **My original explanation:** Asked what part number had to do with the quantity value; thought `= None` defaults were involved.
+- **Corrected understanding:** An unquoted name in a dict literal is a variable, so its value becomes the key (`{"TRAIN-PN-001": ...}`). The KeyError names whichever key is looked up first.
+- **Rule going forward:** Dict keys in quotes unless you mean a variable; on a KeyError, `print` the dict and compare its keys.
