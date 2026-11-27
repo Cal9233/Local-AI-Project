@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 5 — API service (calendar weeks 1–4, still open; 12.1 Hugging Face/PyTorch is the remaining weeks 5–8 item). Default model is now `qwen3.6:35b` with prompt V3.
+**Current lesson:** 12.1 — Run a model directly (Hugging Face, PyTorch), the remaining weeks 5–8 item (3.3 still deferred). Default model is now `qwen3.6:35b` with prompt V3.
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -36,7 +36,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [x] 4.4 Model comparison (local and hosted) — 2026-11-26: chose qwen3.6:35b (100% held-out on V3, 0 invented, ~5 s/email, local); compared 9b, Opus 5.5, Haiku 5.5 over 22 emails × 3 runs (`docs/MODEL_COMPARISON.md`). E18 (dropped "call for pricing" offer) fixed by one prompt rule tuned on dev twin E21. Learner wired `--model`, found the `python -m` import fix and the model-not-passed bug; remaining work done by Claude on request. Checkpoint: justified the choice (privacy, ~5 s); explained E18 with help; gap: proposed a schema change before writing a failing eval case.
 
 ## Milestone 5 — HTTP API service
-- [ ] 5 API service
+- [x] 5 API service — 2026-11-27: GET /quotes and GET /cheapest (required query params) call main.py rules; T01–T10 match over HTTP via httpx (`api_client.py`) and curl; no-match → 200 (`no_match` / `no_eligible_quote`); qty 0/−1 → 400 with `str(e)`, abc/missing → 422; `tests/test_api.py`, 53 pass. Learner designed methods, status codes, layering; debugged `load_quotes` without `()`, unquoted dict keys, `str(e)`; final fixes + tests by Claude on request. Checkpoint: case-sensitive `oh` → 200 `no_eligible_quote`; single formatting rule → tests fail on drift; transfer `max_lead_time_days` (rule in main.py, 400 via api.py).
 
 ## Milestone 6 — Document retrieval with evidence
 - [ ] 6 Retrieval

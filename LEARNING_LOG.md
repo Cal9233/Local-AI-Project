@@ -37,3 +37,6 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 - Completed 4.1 (checked extraction examples): eval set of 8 fictional emails; learned that schema-valid ≠ correct (3.45 vs 3450.00) and that a held-out case used for tuning must move to dev and be replaced.
 - Completed 4.2 (extract → validate → store): unrankable quotes go to `review_quotes` with source phrase; learned a phrase check proves text exists, not that it describes this record (E01 exchange unit got an invented OH and was ranked).
 - Completed 4.4 (model comparison): measured 4 models, chose local qwen3.6:35b; found that `--model` was logged but never reached the model call, so early "35b" results were really 9b.
+
+## 2026-11-27
+- Completed 5 (HTTP API): same rule functions behind CLI and API; learned that "required" and "in the path" are separate choices, and that business rules raise Python errors which each interface translates (ValueError → 400).

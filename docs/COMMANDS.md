@@ -2,7 +2,7 @@
 
 Commands for working on this project. Run all of them from the project folder unless a note says otherwise.
 
-Last updated: 2026-11-18
+Last updated: 2026-11-27
 
 ## 1. Getting started (machine and project folder)
 
@@ -60,7 +60,25 @@ Note (2026-11-18): the `ollama` command was not found in this Mac's terminal. Ei
 | Use the workstation's Ollama from Python | `OLLAMA_HOST=http://<workstation-host>:11434 python model.py` | The workstation must listen on all interfaces (next row) |
 | Let other machines reach this server | `OLLAMA_HOST=0.0.0.0 ollama serve` | Run this on the workstation |
 
-## 5. Git
+## 5. API server (FastAPI + uvicorn)
+
+`api.py` is the FastAPI app; `uvicorn` is the program that runs it. In `uvicorn api:app`, `api` is the file name without `.py` and `app` is the `FastAPI()` variable inside it. The server runs until you stop it, so use a second terminal for the calls.
+
+| Task | Command | Notes |
+| --- | --- | --- |
+| Start the server (development) | `uvicorn api:app --reload` | Restarts on every save. Serves `http://127.0.0.1:8000` |
+| Start without activating the venv | `uv run uvicorn api:app --reload` | |
+| Start on another port | `uvicorn api:app --reload --port 8001` | Use when 8000 is already taken |
+| Let other machines reach it | `uvicorn api:app --host 0.0.0.0` | Same idea as `OLLAMA_HOST=0.0.0.0` (section 4) |
+| Stop the server | `Ctrl+C` | In the terminal running uvicorn |
+| Check that it is up | `curl http://127.0.0.1:8000/ping` | Expected: `{"status":"ok"}` |
+| Open the interactive docs | `http://127.0.0.1:8000/docs` | In a browser; try each endpoint there |
+| Search by part number (T01) | `curl "http://127.0.0.1:8000/quotes?part_number=TRAIN-PN-001"` | Quote the URL: the shell treats `?` and `&` specially |
+| Cheapest offer (T02) | `curl "http://127.0.0.1:8000/cheapest?part_number=TRAIN-PN-001&requested_quantity=1&condition=OH&currency=USD&sale_basis=OUTRIGHT"` | Add `-i` to see the status code and headers |
+| Run every contract case over HTTP | `python api_client.py` | Server must be running; prints OK or MISMATCH per case |
+| Test the API without a server | `python -m pytest tests/test_api.py` | Uses FastAPI's `TestClient` |
+
+## 6. Git
 
 | Task | Command |
 | --- | --- |
@@ -73,7 +91,7 @@ Note (2026-11-18): the `ollama` command was not found in this Mac's terminal. Ei
 | See recent history | `git log --oneline -10` |
 | Discard changes to one file | `git restore <file>` (cannot be undone) |
 
-## 6. Claude Code learning commands
+## 7. Claude Code learning commands
 
 Type these inside Claude Code. They are defined in `.claude/commands/`.
 
