@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 4.4 — Model comparison (local and hosted) (calendar order; 4.3 is weeks 9–12). Before starting: grow held-out emails toward 20; read `extraction.py` and `evals/run_eval.py`.
+**Current lesson:** 5 — API service (calendar weeks 1–4, still open; 12.1 Hugging Face/PyTorch is the remaining weeks 5–8 item). Default model is now `qwen3.6:35b` with prompt V3.
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -33,7 +33,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [x] 4.1 Checked extraction examples — 2026-11-26: 8 emails (6 dev / 2 held out) cover EXCHANGE, EUR, ambiguous condition, two line items, core charge, missing currency, lot total, no-offer; E06 hand-checked (4875.00). Grow held-out toward 20 before 4.4.
 - [x] 4.2 Extract → validate → store with source — 2026-11-26: E05 stored in `review_quotes` with price 2750.00, phrase and `missing_currency`, never ranked; field accuracy qwen3.5:9b V2 ×3: dev 100% except condition 23/24, held-out 100%; TIMEOUT 30→60 (learner). Design by learner (separate review table, optional price, review before `unit_price`, rule by data not case ID); code written by Claude on request. Checkpoint: whitespace-normalized phrase match (corrected after reading), `condition_phrase` transfer, GBP → `unsupported_currency`.
 - [ ] 4.3 Text-based PDFs
-- [ ] 4.4 Model comparison (local and hosted)
+- [x] 4.4 Model comparison (local and hosted) — 2026-11-26: chose qwen3.6:35b (100% held-out on V3, 0 invented, ~5 s/email, local); compared 9b, Opus 5.5, Haiku 5.5 over 22 emails × 3 runs (`docs/MODEL_COMPARISON.md`). E18 (dropped "call for pricing" offer) fixed by one prompt rule tuned on dev twin E21. Learner wired `--model`, found the `python -m` import fix and the model-not-passed bug; remaining work done by Claude on request. Checkpoint: justified the choice (privacy, ~5 s); explained E18 with help; gap: proposed a schema change before writing a failing eval case.
 
 ## Milestone 5 — HTTP API service
 - [ ] 5 API service
