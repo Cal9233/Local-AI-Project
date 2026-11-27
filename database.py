@@ -1,7 +1,7 @@
-import sqlite3
 import csv
-from pathlib import Path
+import sqlite3
 from decimal import Decimal
+from pathlib import Path
 
 table_schema = Path("schema.sql").read_text()
 quotes_dir = Path("data/sample_quotes.csv")

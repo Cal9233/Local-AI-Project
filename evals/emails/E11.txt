@@ -1,0 +1,11 @@
+From: verkauf@alpenflug-teile.example
+Subject: Angebot / quote TRAIN-PN-019
+
+Dear customer,
+
+For TRAIN-PN-019 we offer a lot of 4 units, new condition, for
+EUR 9.000,00 total (outright). Delivery from stock, EXW Munich.
+
+Kind regards,
+Lena
+Alpenflug Teile GmbH (fictional)
