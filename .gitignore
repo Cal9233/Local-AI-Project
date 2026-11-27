@@ -5,3 +5,5 @@ __pycache__/
 .env
 # Generated SQLite database (rebuilt by database.py)
 *.db
+.env.linux
+.env.mac

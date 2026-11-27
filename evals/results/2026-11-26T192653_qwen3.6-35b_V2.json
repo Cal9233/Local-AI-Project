@@ -1,0 +1,2261 @@
+{
+ "model": "qwen3.6:35b",
+ "prompt_version": "V2",
+ "runs": 3,
+ "timeout_s": 60,
+ "cold_start_s": 26.8,
+ "summary": {
+  "dev": {
+   "runs": 30,
+   "errors": 0,
+   "record_count_exact": 30,
+   "expected_records": 36,
+   "field_matches": {
+    "part_number": 36,
+    "quantity": 36,
+    "condition": 36,
+    "unit_price": 36,
+    "currency": 36,
+    "sale_basis": 36,
+    "core_charge": 36
+   },
+   "unknowns": {
+    "kept_null": 39,
+    "invented": 0
+   },
+   "latency": {
+    "median": 5.3,
+    "min": 1.7,
+    "max": 11.0,
+    "n": 30
+   },
+   "output_tokens": {
+    "median": 1923.0,
+    "min": 595,
+    "max": 3923,
+    "n": 30
+   },
+   "thinking_chars": {
+    "median": 5475.0,
+    "min": 1538,
+    "max": 11631,
+    "n": 30
+   },
+   "tokens_per_s": {
+    "median": 362.6,
+    "min": 348.3,
+    "max": 385.0,
+    "n": 30
+   },
+   "cost_usd": "0"
+  },
+  "held_out": {
+   "runs": 30,
+   "errors": 0,
+   "record_count_exact": 28,
+   "expected_records": 30,
+   "field_matches": {
+    "part_number": 28,
+    "quantity": 28,
+    "condition": 28,
+    "unit_price": 28,
+    "currency": 28,
+    "sale_basis": 28,
+    "core_charge": 28
+   },
+   "unknowns": {
+    "kept_null": 27,
+    "invented": 0
+   },
+   "latency": {
+    "median": 5.6,
+    "min": 0.9,
+    "max": 11.3,
+    "n": 30
+   },
+   "output_tokens": {
+    "median": 1975.0,
+    "min": 306,
+    "max": 4241,
+    "n": 30
+   },
+   "thinking_chars": {
+    "median": 5947.5,
+    "min": 1059,
+    "max": 12805,
+    "n": 30
+   },
+   "tokens_per_s": {
+    "median": 356.0,
+    "min": 335.5,
+    "max": 377.8,
+    "n": 30
+   },
+   "cost_usd": "0"
+  }
+ },
+ "results": [
+  {
+   "id": "E01",
+   "latency_s": 11.0,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-007",
+     "quantity": 2,
+     "condition": "OH",
+     "unit_price": "9850.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-007",
+     "quantity": 1,
+     "condition": null,
+     "unit_price": "4200.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "6500.00"
+    }
+   ],
+   "input_tokens": 529,
+   "output_tokens": 3923,
+   "thinking_chars": 11631,
+   "tokens_per_s": 358.33133600682794,
+   "cost_usd": null
+  },
+  {
+   "id": "E01",
+   "latency_s": 10.2,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-007",
+     "quantity": 2,
+     "condition": "OH",
+     "unit_price": "9850.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-007",
+     "quantity": 1,
+     "condition": null,
+     "unit_price": "4200.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "6500.00"
+    }
+   ],
+   "input_tokens": 529,
+   "output_tokens": 3676,
+   "thinking_chars": 11149,
+   "tokens_per_s": 360.9225006313198,
+   "cost_usd": null
+  },
+  {
+   "id": "E01",
+   "latency_s": 9.9,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-007",
+     "quantity": 2,
+     "condition": "OH",
+     "unit_price": "9850.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-007",
+     "quantity": 1,
+     "condition": null,
+     "unit_price": "4200.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "6500.00"
+    }
+   ],
+   "input_tokens": 529,
+   "output_tokens": 3484,
+   "thinking_chars": 10262,
+   "tokens_per_s": 354.7520121536166,
+   "cost_usd": null
+  },
+  {
+   "id": "E02",
+   "latency_s": 1.7,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-010",
+     "quantity": 4,
+     "condition": "NE",
+     "unit_price": "3450.00",
+     "currency": "EUR",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 425,
+   "output_tokens": 595,
+   "thinking_chars": 1538,
+   "tokens_per_s": 367.5584850412963,
+   "cost_usd": null
+  },
+  {
+   "id": "E02",
+   "latency_s": 5.3,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-010",
+     "quantity": 4,
+     "condition": "NE",
+     "unit_price": "3450.00",
+     "currency": "EUR",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 425,
+   "output_tokens": 1893,
+   "thinking_chars": 5397,
+   "tokens_per_s": 369.0541199443436,
+   "cost_usd": null
+  },
+  {
+   "id": "E02",
+   "latency_s": 3.7,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-010",
+     "quantity": 4,
+     "condition": "NE",
+     "unit_price": "3450.00",
+     "currency": "EUR",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 425,
+   "output_tokens": 1401,
+   "thinking_chars": 4023,
+   "tokens_per_s": 380.2000704496347,
+   "cost_usd": null
+  },
+  {
+   "id": "E03",
+   "latency_s": 8.0,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-011",
+     "quantity": 6,
+     "condition": "SV",
+     "unit_price": "420.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-012",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "12900.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 468,
+   "output_tokens": 3039,
+   "thinking_chars": 7748,
+   "tokens_per_s": 384.9863189873251,
+   "cost_usd": null
+  },
+  {
+   "id": "E03",
+   "latency_s": 5.4,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-011",
+     "quantity": 6,
+     "condition": "SV",
+     "unit_price": "420.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-012",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "12900.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 468,
+   "output_tokens": 2033,
+   "thinking_chars": 5021,
+   "tokens_per_s": 378.9213137181444,
+   "cost_usd": null
+  },
+  {
+   "id": "E03",
+   "latency_s": 6.5,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-011",
+     "quantity": 6,
+     "condition": "SV",
+     "unit_price": "420.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-012",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "12900.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 468,
+   "output_tokens": 2447,
+   "thinking_chars": 6024,
+   "tokens_per_s": 380.7836674151107,
+   "cost_usd": null
+  },
+  {
+   "id": "E04",
+   "latency_s": 4.6,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-013",
+     "quantity": 2,
+     "condition": null,
+     "unit_price": "1150.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 428,
+   "output_tokens": 1686,
+   "thinking_chars": 4939,
+   "tokens_per_s": 373.5114372923921,
+   "cost_usd": null
+  },
+  {
+   "id": "E04",
+   "latency_s": 4.3,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-013",
+     "quantity": 2,
+     "condition": null,
+     "unit_price": "1150.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 428,
+   "output_tokens": 1547,
+   "thinking_chars": 4604,
+   "tokens_per_s": 361.87777841196703,
+   "cost_usd": null
+  },
+  {
+   "id": "E04",
+   "latency_s": 5.2,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-013",
+     "quantity": 2,
+     "condition": null,
+     "unit_price": "1150.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 428,
+   "output_tokens": 1922,
+   "thinking_chars": 5504,
+   "tokens_per_s": 374.5590599931753,
+   "cost_usd": null
+  },
+  {
+   "id": "E05",
+   "latency_s": 3.6,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_currency"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-014",
+     "quantity": 3,
+     "condition": "OH",
+     "unit_price": "2750.00",
+     "currency": null,
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 406,
+   "output_tokens": 1235,
+   "thinking_chars": 3354,
+   "tokens_per_s": 369.6916322768634,
+   "cost_usd": null
+  },
+  {
+   "id": "E05",
+   "latency_s": 6.7,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_currency"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-014",
+     "quantity": 3,
+     "condition": "OH",
+     "unit_price": "2750.00",
+     "currency": null,
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 406,
+   "output_tokens": 2364,
+   "thinking_chars": 7056,
+   "tokens_per_s": 355.4667523556063,
+   "cost_usd": null
+  },
+  {
+   "id": "E05",
+   "latency_s": 4.9,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_currency"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-014",
+     "quantity": 3,
+     "condition": "OH",
+     "unit_price": "2750.00",
+     "currency": null,
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 406,
+   "output_tokens": 1721,
+   "thinking_chars": 4940,
+   "tokens_per_s": 356.8934139167279,
+   "cost_usd": null
+  },
+  {
+   "id": "E06",
+   "latency_s": 5.4,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-004",
+     "quantity": 3,
+     "condition": "SV",
+     "unit_price": "4875.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 432,
+   "output_tokens": 1924,
+   "thinking_chars": 5586,
+   "tokens_per_s": 363.78563194234493,
+   "cost_usd": null
+  },
+  {
+   "id": "E06",
+   "latency_s": 5.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-004",
+     "quantity": 3,
+     "condition": "SV",
+     "unit_price": "4875.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 432,
+   "output_tokens": 1975,
+   "thinking_chars": 5698,
+   "tokens_per_s": 362.20142910929445,
+   "cost_usd": null
+  },
+  {
+   "id": "E06",
+   "latency_s": 4.9,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-004",
+     "quantity": 3,
+     "condition": "SV",
+     "unit_price": "4875.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 432,
+   "output_tokens": 1755,
+   "thinking_chars": 4957,
+   "tokens_per_s": 360.1527786556431,
+   "cost_usd": null
+  },
+  {
+   "id": "E07",
+   "latency_s": 5.6,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-015",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "2100.00",
+     "currency": "EUR",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "8900.00"
+    }
+   ],
+   "input_tokens": 450,
+   "output_tokens": 1873,
+   "thinking_chars": 5718,
+   "tokens_per_s": 342.7724157695808,
+   "cost_usd": null
+  },
+  {
+   "id": "E07",
+   "latency_s": 7.8,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-015",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "2100.00",
+     "currency": "EUR",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "8900.00"
+    }
+   ],
+   "input_tokens": 450,
+   "output_tokens": 2751,
+   "thinking_chars": 8487,
+   "tokens_per_s": 352.878971620116,
+   "cost_usd": null
+  },
+  {
+   "id": "E07",
+   "latency_s": 6.8,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-015",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "2100.00",
+     "currency": "EUR",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "8900.00"
+    }
+   ],
+   "input_tokens": 450,
+   "output_tokens": 2403,
+   "thinking_chars": 7296,
+   "tokens_per_s": 355.62740784765947,
+   "cost_usd": null
+  },
+  {
+   "id": "E08",
+   "latency_s": 2.4,
+   "expected_records": 0,
+   "extracted_records": 0,
+   "matches": {
+    "part_number": 0,
+    "quantity": 0,
+    "condition": 0,
+    "unit_price": 0,
+    "currency": 0,
+    "sale_basis": 0,
+    "core_charge": 0
+   },
+   "routes": [],
+   "review_reasons": [],
+   "extracted": [],
+   "input_tokens": 407,
+   "output_tokens": 793,
+   "thinking_chars": 2967,
+   "tokens_per_s": 346.67288025708876,
+   "cost_usd": null
+  },
+  {
+   "id": "E08",
+   "latency_s": 1.7,
+   "expected_records": 0,
+   "extracted_records": 0,
+   "matches": {
+    "part_number": 0,
+    "quantity": 0,
+    "condition": 0,
+    "unit_price": 0,
+    "currency": 0,
+    "sale_basis": 0,
+    "core_charge": 0
+   },
+   "routes": [],
+   "review_reasons": [],
+   "extracted": [],
+   "input_tokens": 407,
+   "output_tokens": 579,
+   "thinking_chars": 2166,
+   "tokens_per_s": 349.11822023269724,
+   "cost_usd": null
+  },
+  {
+   "id": "E08",
+   "latency_s": 0.9,
+   "expected_records": 0,
+   "extracted_records": 0,
+   "matches": {
+    "part_number": 0,
+    "quantity": 0,
+    "condition": 0,
+    "unit_price": 0,
+    "currency": 0,
+    "sale_basis": 0,
+    "core_charge": 0
+   },
+   "routes": [],
+   "review_reasons": [],
+   "extracted": [],
+   "input_tokens": 407,
+   "output_tokens": 306,
+   "thinking_chars": 1059,
+   "tokens_per_s": 343.16127795054217,
+   "cost_usd": null
+  },
+  {
+   "id": "E09",
+   "latency_s": 3.9,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-017",
+     "quantity": 2,
+     "condition": "NE",
+     "unit_price": "640.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 418,
+   "output_tokens": 1394,
+   "thinking_chars": 4092,
+   "tokens_per_s": 362.93482534086974,
+   "cost_usd": null
+  },
+  {
+   "id": "E09",
+   "latency_s": 5.3,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-017",
+     "quantity": 2,
+     "condition": "NE",
+     "unit_price": "640.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 418,
+   "output_tokens": 1836,
+   "thinking_chars": 5657,
+   "tokens_per_s": 350.4912413460543,
+   "cost_usd": null
+  },
+  {
+   "id": "E09",
+   "latency_s": 5.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-017",
+     "quantity": 2,
+     "condition": "NE",
+     "unit_price": "640.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 418,
+   "output_tokens": 2018,
+   "thinking_chars": 5904,
+   "tokens_per_s": 366.9868921302225,
+   "cost_usd": null
+  },
+  {
+   "id": "E10",
+   "latency_s": 6.2,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-018",
+     "quantity": 1,
+     "condition": "SV",
+     "unit_price": "1850.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "4750.00"
+    }
+   ],
+   "input_tokens": 430,
+   "output_tokens": 2174,
+   "thinking_chars": 6251,
+   "tokens_per_s": 353.7654870035933,
+   "cost_usd": null
+  },
+  {
+   "id": "E10",
+   "latency_s": 6.8,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-018",
+     "quantity": 1,
+     "condition": "SV",
+     "unit_price": "1850.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "4750.00"
+    }
+   ],
+   "input_tokens": 430,
+   "output_tokens": 2358,
+   "thinking_chars": 6856,
+   "tokens_per_s": 348.3086351294222,
+   "cost_usd": null
+  },
+  {
+   "id": "E10",
+   "latency_s": 7.4,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-018",
+     "quantity": 1,
+     "condition": "SV",
+     "unit_price": "1850.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "4750.00"
+    }
+   ],
+   "input_tokens": 430,
+   "output_tokens": 2582,
+   "thinking_chars": 7659,
+   "tokens_per_s": 350.94391272016736,
+   "cost_usd": null
+  },
+  {
+   "id": "E11",
+   "latency_s": 6.4,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-019",
+     "quantity": 4,
+     "condition": "NE",
+     "unit_price": "2250.00",
+     "currency": "EUR",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 412,
+   "output_tokens": 2298,
+   "thinking_chars": 6816,
+   "tokens_per_s": 363.5403514761273,
+   "cost_usd": null
+  },
+  {
+   "id": "E11",
+   "latency_s": 5.1,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-019",
+     "quantity": 4,
+     "condition": "NE",
+     "unit_price": "2250.00",
+     "currency": "EUR",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 412,
+   "output_tokens": 1860,
+   "thinking_chars": 5189,
+   "tokens_per_s": 364.9199687345988,
+   "cost_usd": null
+  },
+  {
+   "id": "E11",
+   "latency_s": 2.6,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-019",
+     "quantity": 4,
+     "condition": "NE",
+     "unit_price": "2250.00",
+     "currency": "EUR",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 412,
+   "output_tokens": 949,
+   "thinking_chars": 2619,
+   "tokens_per_s": 365.8631556140526,
+   "cost_usd": null
+  },
+  {
+   "id": "E12",
+   "latency_s": 5.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-020A",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "3300.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 412,
+   "output_tokens": 1961,
+   "thinking_chars": 5446,
+   "tokens_per_s": 361.08541428520925,
+   "cost_usd": null
+  },
+  {
+   "id": "E12",
+   "latency_s": 5.2,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-020A",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "3300.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 412,
+   "output_tokens": 1827,
+   "thinking_chars": 5248,
+   "tokens_per_s": 353.38293073404424,
+   "cost_usd": null
+  },
+  {
+   "id": "E12",
+   "latency_s": 4.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-020A",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "3300.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 412,
+   "output_tokens": 1604,
+   "thinking_chars": 4439,
+   "tokens_per_s": 358.41493008227457,
+   "cost_usd": null
+  },
+  {
+   "id": "E13",
+   "latency_s": 6.0,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "unsupported_currency"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-021",
+     "quantity": 2,
+     "condition": "OH",
+     "unit_price": "1450.00",
+     "currency": "GBP",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 399,
+   "output_tokens": 2041,
+   "thinking_chars": 6536,
+   "tokens_per_s": 346.0114928030966,
+   "cost_usd": null
+  },
+  {
+   "id": "E13",
+   "latency_s": 7.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "unsupported_currency"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-021",
+     "quantity": 2,
+     "condition": "OH",
+     "unit_price": "1450.00",
+     "currency": "GBP",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 399,
+   "output_tokens": 2542,
+   "thinking_chars": 7792,
+   "tokens_per_s": 340.77762182263746,
+   "cost_usd": null
+  },
+  {
+   "id": "E13",
+   "latency_s": 8.0,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "unsupported_currency"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-021",
+     "quantity": 2,
+     "condition": "OH",
+     "unit_price": "1450.00",
+     "currency": "GBP",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 399,
+   "output_tokens": 2753,
+   "thinking_chars": 8868,
+   "tokens_per_s": 346.4410885926501,
+   "cost_usd": null
+  },
+  {
+   "id": "E14",
+   "latency_s": 4.9,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-022",
+     "quantity": 10,
+     "condition": "NE",
+     "unit_price": "85.50",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 404,
+   "output_tokens": 1700,
+   "thinking_chars": 5244,
+   "tokens_per_s": 354.9804593697719,
+   "cost_usd": null
+  },
+  {
+   "id": "E14",
+   "latency_s": 4.2,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-022",
+     "quantity": 10,
+     "condition": "NE",
+     "unit_price": "85.50",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 404,
+   "output_tokens": 1535,
+   "thinking_chars": 4478,
+   "tokens_per_s": 366.8623186033133,
+   "cost_usd": null
+  },
+  {
+   "id": "E14",
+   "latency_s": 5.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-022",
+     "quantity": 10,
+     "condition": "NE",
+     "unit_price": "85.50",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 404,
+   "output_tokens": 1968,
+   "thinking_chars": 5558,
+   "tokens_per_s": 359.12539826787685,
+   "cost_usd": null
+  },
+  {
+   "id": "E15",
+   "latency_s": 5.3,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-023",
+     "quantity": 3,
+     "condition": "OH",
+     "unit_price": "7400.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 418,
+   "output_tokens": 1882,
+   "thinking_chars": 5411,
+   "tokens_per_s": 358.5564388220221,
+   "cost_usd": null
+  },
+  {
+   "id": "E15",
+   "latency_s": 6.7,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-023",
+     "quantity": 3,
+     "condition": "OH",
+     "unit_price": "7400.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 418,
+   "output_tokens": 2382,
+   "thinking_chars": 6467,
+   "tokens_per_s": 355.15318776823796,
+   "cost_usd": null
+  },
+  {
+   "id": "E15",
+   "latency_s": 5.7,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-023",
+     "quantity": 3,
+     "condition": "OH",
+     "unit_price": "7400.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 418,
+   "output_tokens": 2035,
+   "thinking_chars": 5834,
+   "tokens_per_s": 360.86877339551273,
+   "cost_usd": null
+  },
+  {
+   "id": "E16",
+   "latency_s": 5.4,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-025",
+     "quantity": 2,
+     "condition": null,
+     "unit_price": "600.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 416,
+   "output_tokens": 1924,
+   "thinking_chars": 5502,
+   "tokens_per_s": 360.6954448139719,
+   "cost_usd": null
+  },
+  {
+   "id": "E16",
+   "latency_s": 5.4,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-025",
+     "quantity": 2,
+     "condition": null,
+     "unit_price": "600.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 416,
+   "output_tokens": 1903,
+   "thinking_chars": 5735,
+   "tokens_per_s": 356.45381834529,
+   "cost_usd": null
+  },
+  {
+   "id": "E16",
+   "latency_s": 6.2,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_condition"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-025",
+     "quantity": 2,
+     "condition": null,
+     "unit_price": "600.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 416,
+   "output_tokens": 2254,
+   "thinking_chars": 6525,
+   "tokens_per_s": 367.0866883194612,
+   "cost_usd": null
+  },
+  {
+   "id": "E17",
+   "latency_s": 6.9,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-026",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "3900.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 404,
+   "output_tokens": 2434,
+   "thinking_chars": 7146,
+   "tokens_per_s": 358.6918975125586,
+   "cost_usd": null
+  },
+  {
+   "id": "E17",
+   "latency_s": 4.9,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-026",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "3900.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 404,
+   "output_tokens": 1786,
+   "thinking_chars": 5146,
+   "tokens_per_s": 367.68770344030935,
+   "cost_usd": null
+  },
+  {
+   "id": "E17",
+   "latency_s": 5.6,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-026",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "3900.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 404,
+   "output_tokens": 1982,
+   "thinking_chars": 6061,
+   "tokens_per_s": 355.54152364431854,
+   "cost_usd": null
+  },
+  {
+   "id": "E18",
+   "latency_s": 4.1,
+   "expected_records": 1,
+   "extracted_records": 0,
+   "matches": {
+    "part_number": 0,
+    "quantity": 0,
+    "condition": 0,
+    "unit_price": 0,
+    "currency": 0,
+    "sale_basis": 0,
+    "core_charge": 0
+   },
+   "routes": [],
+   "review_reasons": [],
+   "extracted": [],
+   "input_tokens": 400,
+   "output_tokens": 1367,
+   "thinking_chars": 5470,
+   "tokens_per_s": 338.45958057256865,
+   "cost_usd": null
+  },
+  {
+   "id": "E18",
+   "latency_s": 9.4,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "review"
+   ],
+   "review_reasons": [
+    "missing_price"
+   ],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-027",
+     "quantity": 1,
+     "condition": "SV",
+     "unit_price": null,
+     "currency": null,
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 400,
+   "output_tokens": 3154,
+   "thinking_chars": 12252,
+   "tokens_per_s": 335.50582396198763,
+   "cost_usd": null
+  },
+  {
+   "id": "E18",
+   "latency_s": 5.2,
+   "expected_records": 1,
+   "extracted_records": 0,
+   "matches": {
+    "part_number": 0,
+    "quantity": 0,
+    "condition": 0,
+    "unit_price": 0,
+    "currency": 0,
+    "sale_basis": 0,
+    "core_charge": 0
+   },
+   "routes": [],
+   "review_reasons": [],
+   "extracted": [],
+   "input_tokens": 400,
+   "output_tokens": 1786,
+   "thinking_chars": 7382,
+   "tokens_per_s": 345.17353280472435,
+   "cost_usd": null
+  },
+  {
+   "id": "E19",
+   "latency_s": 11.3,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-028",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "15000.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-028",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "5200.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "9000.00"
+    }
+   ],
+   "input_tokens": 444,
+   "output_tokens": 4241,
+   "thinking_chars": 12805,
+   "tokens_per_s": 377.84632051987944,
+   "cost_usd": null
+  },
+  {
+   "id": "E19",
+   "latency_s": 10.2,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-028",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "15000.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-028",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "5200.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "9000.00"
+    }
+   ],
+   "input_tokens": 444,
+   "output_tokens": 3800,
+   "thinking_chars": 11347,
+   "tokens_per_s": 372.78595797701615,
+   "cost_usd": null
+  },
+  {
+   "id": "E19",
+   "latency_s": 7.8,
+   "expected_records": 2,
+   "extracted_records": 2,
+   "matches": {
+    "part_number": 2,
+    "quantity": 2,
+    "condition": 2,
+    "unit_price": 2,
+    "currency": 2,
+    "sale_basis": 2,
+    "core_charge": 2
+   },
+   "routes": [
+    "ranked",
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-028",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "15000.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    },
+    {
+     "part_number": "TRAIN-PN-028",
+     "quantity": 1,
+     "condition": "OH",
+     "unit_price": "5200.00",
+     "currency": "USD",
+     "sale_basis": "EXCHANGE",
+     "core_charge": "9000.00"
+    }
+   ],
+   "input_tokens": 444,
+   "output_tokens": 2817,
+   "thinking_chars": 7571,
+   "tokens_per_s": 363.3435500328712,
+   "cost_usd": null
+  },
+  {
+   "id": "E20",
+   "latency_s": 5.1,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-029",
+     "quantity": 2,
+     "condition": "SV",
+     "unit_price": "1975.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 436,
+   "output_tokens": 1856,
+   "thinking_chars": 5312,
+   "tokens_per_s": 371.78265778127485,
+   "cost_usd": null
+  },
+  {
+   "id": "E20",
+   "latency_s": 3.6,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-029",
+     "quantity": 2,
+     "condition": "SV",
+     "unit_price": "1975.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 436,
+   "output_tokens": 1282,
+   "thinking_chars": 3323,
+   "tokens_per_s": 360.91194170906164,
+   "cost_usd": null
+  },
+  {
+   "id": "E20",
+   "latency_s": 6.5,
+   "expected_records": 1,
+   "extracted_records": 1,
+   "matches": {
+    "part_number": 1,
+    "quantity": 1,
+    "condition": 1,
+    "unit_price": 1,
+    "currency": 1,
+    "sale_basis": 1,
+    "core_charge": 1
+   },
+   "routes": [
+    "ranked"
+   ],
+   "review_reasons": [],
+   "extracted": [
+    {
+     "part_number": "TRAIN-PN-029",
+     "quantity": 2,
+     "condition": "SV",
+     "unit_price": "1975.00",
+     "currency": "USD",
+     "sale_basis": "OUTRIGHT",
+     "core_charge": null
+    }
+   ],
+   "input_tokens": 436,
+   "output_tokens": 2341,
+   "thinking_chars": 6808,
+   "tokens_per_s": 365.10979027632,
+   "cost_usd": null
+  }
+ ]
+}

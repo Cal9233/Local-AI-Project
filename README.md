@@ -22,6 +22,30 @@ uv pip install -r requirements.txt   # packages added so far; later stages add m
 
 External packages are added by stage and recorded in `requirements.txt`. `model.py` holds the first model experiments (the brief calls it `model_practice.py`).
 
+## Evals and model comparison
+
+Run evals as a module from the project root, so `config` and `model` import:
+
+```bash
+python -m evals.run_eval --runs 3                                  # default model from .env.linux / .env.mac
+python -m evals.run_eval --model qwen3.6:35b --runs 3 --warmup     # another local model; skip load time
+python -m evals.run_eval --model claude-opus-5-5 --runs 1          # hosted; needs ANTHROPIC_API_KEY
+python -m evals.run_eval --cases E01 --timeout 1                   # simulate a timeout
+```
+
+Results go to `evals/results/`. The comparison write-up is `docs/MODEL_COMPARISON.md`.
+
+## Configuration
+
+`config.py` loads `.env.linux` or `.env.mac` (see `.env.example`): `MODEL_HOST`, `MODEL`.
+The hosted provider reads `ANTHROPIC_API_KEY` from the environment. Never put it in code or git.
+
+## Tests
+
+```bash
+python -m pytest tests
+```
+
 ## Data
 
 - `data/sample_quotes.csv`: five fictional supplier quotes

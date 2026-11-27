@@ -1,11 +1,21 @@
 import json
+import sqlite3
 import unittest
 from decimal import Decimal
 from pathlib import Path
-import sqlite3
-from model import Quote, Conditions, Sales, PriceBasis
-from extraction import ingest_email, phrase_in_source, store_extracted, supplier_from_email
 
+from database import (
+    create_db,
+    filter_by_part_number_sql,
+    find_cheapest_sql,
+    import_quotes,
+)
+from extraction import (
+    ingest_email,
+    phrase_in_source,
+    store_extracted,
+    supplier_from_email,
+)
 from main import (
     file_dir,
     filter_by_part_number,
@@ -13,13 +23,7 @@ from main import (
     load_quotes,
     validate_request,
 )
-
-from database import (
-    create_db, 
-    import_quotes, 
-    filter_by_part_number_sql,
-    find_cheapest_sql
-)
+from model import Quote
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 CONTRACT_PATH = DATA_DIR / "expected_results.json"
@@ -64,7 +68,7 @@ class TestContract(unittest.TestCase):
         cls.source = load_quotes(DATA_DIR / contract["dataset_file"])
     
     def run_case(self, case_id):
-        case = [i for i in self.cases if i["id"] == case_id].pop(0)
+        case = next(i for i in self.cases if i["id"] == case_id)
         if case["action"] == "filter_by_part_number":
             actual = {
                 "matching_quote_ids": self.filter_by_part_number(
@@ -129,7 +133,7 @@ class TestValidateRequest(unittest.TestCase):
 
     def test_non_integer_quantity_raises(self):
         for bad in ("2", 1.5):
-            with self.subTest(qty=bad), self.assertRaises(ValueError):
+            with self.subTest(qty=bad), self.assertRaises(TypeError):
                 validate_request(self.base_request(bad))
 
 class TestContractSQL(TestContract):
@@ -229,7 +233,7 @@ class TestStoreExtracted(unittest.TestCase):
 
     def test_ingest_email_is_rerun_safe_and_uses_header_supplier(self):
         phrase = "Price 2,750.00 each, outright."
-        fake = lambda text: [Quote(part_number="TRAIN-PN-014", quantity=3, condition='OH', currency=None, price=Decimal("2750.00"), price_basis="PER_UNIT", sale_basis="OUTRIGHT", core_charge=None, price_phrase=phrase)]  # noqa: E731
+        fake = lambda text: [Quote(part_number="TRAIN-PN-014", quantity=3, condition='OH', currency=None, price=Decimal("2750.00"), price_basis="PER_UNIT", sale_basis="OUTRIGHT", core_charge=None, price_phrase=phrase)]
 
         self.assertEqual(ingest_email(self.conn, EMAILS_DIR / "E05.txt", fake), ["review"])
         ingest_email(self.conn, EMAILS_DIR / "E05.txt", fake)
