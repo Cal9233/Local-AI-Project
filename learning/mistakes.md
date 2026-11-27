@@ -63,3 +63,18 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **My original explanation:** Text that doesn't match exactly fails the phrase check.
 - **Corrected understanding:** `phrase_in_source` calls `_normalize`, which collapses all whitespace (including line breaks) on both sides first, so the phrase matches and the quote is ranked (`unit_price` 487500 cents).
 - **Rule going forward:** Read the checking function before predicting its result.
+
+## 2026-11-26 — Predicted the bigger model would be faster (Lesson 4.4)
+
+- **Symptom:** Predicted qwen3.6:35b would respond faster than qwen3.5:9b.
+- **My original explanation:** More parameters and more training means a faster response.
+- **Corrected understanding:** Size alone does not predict speed. 35b is mixture-of-experts (uses only part of its weights per token, ~360 tok/s); 9b wrote ~2.4× more tokens, mostly thinking, at ~193 tok/s. 35b was ~4× faster warm.
+- **Rule going forward:** Measure latency, tokens and tok/s before explaining speed.
+
+## 2026-11-26 — Changed the design before writing a failing case (Lesson 4.4)
+
+- **Symptom:** For a new pattern (unit on loan, back in 10 days), proposed adding a schema attribute first.
+- **My original explanation:** Add a validation check for whether the unit is there.
+- **Corrected understanding:** First add a dev email with its expected result and confirm it fails on the current prompt; then change prompt or schema, check dev, score held-out once. Also: quantity 0 fails `Field(gt=0)` and loses the whole email; no stock now means no record.
+- **Rule going forward:** Failing eval case → confirm it fails → change → dev → held-out once.
+

@@ -29,3 +29,11 @@ Keep short retrieval prompts or review metadata for meaningful topics.
 - **Last reviewed:** 2026-11-23 (3.1 checkpoint; predicted `'3'` rejected, corrected on retry; lead-time CHECK needed the answer)
 - **Confidence:** low
 - **Next review or exercise:** predict, then test, inserts of NULL, 0, -1, '7', 'abc' against your own optional-column CHECK; test the exact boundary value first.
+
+## 2026-11-26: Eval-first changes and whole-wrapper validation
+
+- **Recall prompt:** What is the first step before changing a prompt for a new failure pattern? Why would `quantity: 0` lose every offer in that email, not just one?
+- **Last reviewed:** 2026-11-26 (4.4 checkpoint; proposed a schema change first; predicted a record with quantity 0)
+- **Confidence:** low
+- **Next review or exercise:** write the loan-unit email as dev E23 with its expected result, predict the 35b output, run it, then decide whether any change is needed.
+
