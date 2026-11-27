@@ -15,10 +15,31 @@
       "id": "E01",
       "file": "emails/E01.txt",
       "split": "dev",
-      "tags": ["exchange", "core_charge", "two_line_items", "future_stock"],
+      "tags": [
+        "exchange",
+        "core_charge",
+        "two_line_items",
+        "future_stock"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-007", "quantity": 2, "condition": "OH", "unit_price": "9850.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null},
-        {"part_number": "TRAIN-PN-007", "quantity": 1, "condition": null, "unit_price": "4200.00", "currency": "USD", "sale_basis": "EXCHANGE", "core_charge": "6500.00"}
+        {
+          "part_number": "TRAIN-PN-007",
+          "quantity": 2,
+          "condition": "OH",
+          "unit_price": "9850.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        },
+        {
+          "part_number": "TRAIN-PN-007",
+          "quantity": 1,
+          "condition": null,
+          "unit_price": "4200.00",
+          "currency": "USD",
+          "sale_basis": "EXCHANGE",
+          "core_charge": "6500.00"
+        }
       ],
       "notes": "Third unit is in the shop (~3 weeks), not in stock, so outright quantity is 2. Exchange unit's condition is never stated."
     },
@@ -26,9 +47,20 @@
       "id": "E02",
       "file": "emails/E02.txt",
       "split": "dev",
-      "tags": ["eur", "european_number_format"],
+      "tags": [
+        "eur",
+        "european_number_format"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-010", "quantity": 4, "condition": "NE", "unit_price": "3450.00", "currency": "EUR", "sale_basis": "OUTRIGHT", "core_charge": null}
+        {
+          "part_number": "TRAIN-PN-010",
+          "quantity": 4,
+          "condition": "NE",
+          "unit_price": "3450.00",
+          "currency": "EUR",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
       ],
       "notes": "'3.450,00' uses '.' for thousands and ',' for decimals: 3450.00, not 3.45."
     },
@@ -36,10 +68,29 @@
       "id": "E03",
       "file": "emails/E03.txt",
       "split": "dev",
-      "tags": ["two_line_items", "different_parts"],
+      "tags": [
+        "two_line_items",
+        "different_parts"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-011", "quantity": 6, "condition": "SV", "unit_price": "420.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null},
-        {"part_number": "TRAIN-PN-012", "quantity": 1, "condition": "OH", "unit_price": "12900.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null}
+        {
+          "part_number": "TRAIN-PN-011",
+          "quantity": 6,
+          "condition": "SV",
+          "unit_price": "420.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        },
+        {
+          "part_number": "TRAIN-PN-012",
+          "quantity": 1,
+          "condition": "OH",
+          "unit_price": "12900.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
       ],
       "notes": "Currency and sale basis are stated once for both items."
     },
@@ -47,9 +98,19 @@
       "id": "E04",
       "file": "emails/E04.txt",
       "split": "dev",
-      "tags": ["ambiguous_condition"],
+      "tags": [
+        "ambiguous_condition"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-013", "quantity": 2, "condition": null, "unit_price": "1150.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null}
+        {
+          "part_number": "TRAIN-PN-013",
+          "quantity": 2,
+          "condition": null,
+          "unit_price": "1150.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
       ],
       "notes": "As removed, untested, no tags: not SV. Condition stays null."
     },
@@ -57,9 +118,19 @@
       "id": "E05",
       "file": "emails/E05.txt",
       "split": "dev",
-      "tags": ["missing_currency"],
+      "tags": [
+        "missing_currency"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-014", "quantity": 3, "condition": "OH", "unit_price": "2750.00", "currency": null, "sale_basis": "OUTRIGHT", "core_charge": null}
+        {
+          "part_number": "TRAIN-PN-014",
+          "quantity": 3,
+          "condition": "OH",
+          "unit_price": "2750.00",
+          "currency": null,
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
       ],
       "notes": "No currency anywhere. Do not assume USD. In 4.2 this record must be flagged before ranking."
     },
@@ -67,9 +138,19 @@
       "id": "E06",
       "file": "emails/E06.txt",
       "split": "dev",
-      "tags": ["lot_total_price"],
+      "tags": [
+        "lot_total_price"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-004", "quantity": 3, "condition": "SV", "unit_price": "4875.00", "currency": "USD", "sale_basis": "OUTRIGHT", "core_charge": null}
+        {
+          "part_number": "TRAIN-PN-004",
+          "quantity": 3,
+          "condition": "SV",
+          "unit_price": "4875.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
       ],
       "notes": "14,625.00 is the total for 3 units; unit price is 4875.00. The arithmetic belongs in code, not the model (see 4.2)."
     },
@@ -77,18 +158,333 @@
       "id": "E07",
       "file": "emails/E07.txt",
       "split": "held_out",
-      "tags": ["exchange", "eur", "european_number_format", "core_charge"],
+      "tags": [
+        "exchange",
+        "eur",
+        "european_number_format",
+        "core_charge"
+      ],
       "records": [
-        {"part_number": "TRAIN-PN-015", "quantity": 1, "condition": "OH", "unit_price": "2100.00", "currency": "EUR", "sale_basis": "EXCHANGE", "core_charge": "8900.00"}
+        {
+          "part_number": "TRAIN-PN-015",
+          "quantity": 1,
+          "condition": "OH",
+          "unit_price": "2100.00",
+          "currency": "EUR",
+          "sale_basis": "EXCHANGE",
+          "core_charge": "8900.00"
+        }
       ]
     },
     {
       "id": "E08",
       "file": "emails/E08.txt",
       "split": "held_out",
-      "tags": ["no_offer", "distractor_price"],
+      "tags": [
+        "no_offer",
+        "distractor_price"
+      ],
       "records": [],
       "notes": "No stock. The USD 5,300.00 is a past sale, not an offer."
+    },
+    {
+      "id": "E09",
+      "file": "emails/E09.txt",
+      "split": "dev",
+      "tags": [
+        "future_stock",
+        "new"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-017",
+          "quantity": 2,
+          "condition": "NE",
+          "unit_price": "640.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "3 more on order are not in stock; quantity is 2."
+    },
+    {
+      "id": "E10",
+      "file": "emails/E10.txt",
+      "split": "dev",
+      "tags": [
+        "exchange",
+        "core_charge"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-018",
+          "quantity": 1,
+          "condition": "SV",
+          "unit_price": "1850.00",
+          "currency": "USD",
+          "sale_basis": "EXCHANGE",
+          "core_charge": "4750.00"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "file": "emails/E11.txt",
+      "split": "dev",
+      "tags": [
+        "lot_total_price",
+        "eur",
+        "european_number_format"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-019",
+          "quantity": 4,
+          "condition": "NE",
+          "unit_price": "2250.00",
+          "currency": "EUR",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "EUR 9.000,00 is the lot total for 4 units: 2250.00 each, computed in code."
+    },
+    {
+      "id": "E12",
+      "file": "emails/E12.txt",
+      "split": "dev",
+      "tags": [
+        "alternate_part_number"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-020A",
+          "quantity": 1,
+          "condition": "OH",
+          "unit_price": "3300.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "Offer is for the alternate TRAIN-PN-020A, exactly as written. Exact matching must not treat it as TRAIN-PN-020."
+    },
+    {
+      "id": "E13",
+      "file": "emails/E13.txt",
+      "split": "held_out",
+      "tags": [
+        "unsupported_currency"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-021",
+          "quantity": 2,
+          "condition": "OH",
+          "unit_price": "1450.00",
+          "currency": "GBP",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "Currency is stated as GBP. Extraction keeps GBP; storage routes it to review (unsupported_currency). No conversion."
+    },
+    {
+      "id": "E14",
+      "file": "emails/E14.txt",
+      "split": "held_out",
+      "tags": [
+        "new",
+        "small_price"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-022",
+          "quantity": 10,
+          "condition": "NE",
+          "unit_price": "85.50",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "'factory new' -> NE."
+    },
+    {
+      "id": "E15",
+      "file": "emails/E15.txt",
+      "split": "held_out",
+      "tags": [
+        "two_parts",
+        "one_no_stock"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-023",
+          "quantity": 3,
+          "condition": "OH",
+          "unit_price": "7400.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "TRAIN-PN-024 has no stock, so it is not an offer."
+    },
+    {
+      "id": "E16",
+      "file": "emails/E16.txt",
+      "split": "held_out",
+      "tags": [
+        "ambiguous_condition"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-025",
+          "quantity": 2,
+          "condition": null,
+          "unit_price": "600.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "As removed; serviceable tag only pending. Condition stays null, not SV."
+    },
+    {
+      "id": "E17",
+      "file": "emails/E17.txt",
+      "split": "held_out",
+      "tags": [
+        "exchange",
+        "missing_core_charge"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-026",
+          "quantity": 1,
+          "condition": "OH",
+          "unit_price": "3900.00",
+          "currency": "USD",
+          "sale_basis": "EXCHANGE",
+          "core_charge": null
+        }
+      ],
+      "notes": "Core charge is not stated. It stays null; never invent one."
+    },
+    {
+      "id": "E18",
+      "file": "emails/E18.txt",
+      "split": "held_out",
+      "tags": [
+        "missing_price"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-027",
+          "quantity": 1,
+          "condition": "SV",
+          "unit_price": null,
+          "currency": null,
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "No price and no currency stated. Goes to review, never ranking."
+    },
+    {
+      "id": "E19",
+      "file": "emails/E19.txt",
+      "split": "held_out",
+      "tags": [
+        "exchange",
+        "core_charge",
+        "two_line_items"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-028",
+          "quantity": 1,
+          "condition": "OH",
+          "unit_price": "15000.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        },
+        {
+          "part_number": "TRAIN-PN-028",
+          "quantity": 1,
+          "condition": "OH",
+          "unit_price": "5200.00",
+          "currency": "USD",
+          "sale_basis": "EXCHANGE",
+          "core_charge": "9000.00"
+        }
+      ],
+      "notes": "Both options are for the same single unit; the buyer picks one. Exchange unit is stated as overhauled."
+    },
+    {
+      "id": "E20",
+      "file": "emails/E20.txt",
+      "split": "held_out",
+      "tags": [
+        "distractor_price",
+        "quoted_thread"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-029",
+          "quantity": 2,
+          "condition": "SV",
+          "unit_price": "1975.00",
+          "currency": "USD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "USD 1,500.00 is the buyer's target price in the quoted thread, not the offer."
+    },
+    {
+      "id": "E21",
+      "file": "emails/E21.txt",
+      "split": "dev",
+      "tags": [
+        "missing_price",
+        "price_on_request"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-030",
+          "quantity": 2,
+          "condition": "OH",
+          "unit_price": null,
+          "currency": null,
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "In stock with no price is still an offer: one record with price null, routed to review. Added in 4.4 as the dev twin of held-out E18."
+    },
+    {
+      "id": "E22",
+      "file": "emails/E22.txt",
+      "split": "dev",
+      "tags": [
+        "unsupported_currency"
+      ],
+      "records": [
+        {
+          "part_number": "TRAIN-PN-031",
+          "quantity": 3,
+          "condition": "NE",
+          "unit_price": "2150.00",
+          "currency": "CAD",
+          "sale_basis": "OUTRIGHT",
+          "core_charge": null
+        }
+      ],
+      "notes": "Currency stated as CAD: keep it, storage routes to review. Added in 4.4 as the dev twin of held-out E13."
     }
   ]
 }
