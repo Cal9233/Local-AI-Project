@@ -62,7 +62,7 @@ A bug fix starts with a test that reproduces it.
 - `.venv` via `uv`. Exact `==` pins in `requirements.txt`, grouped by stage with a
   comment *(CSC6301 Module 6)*.
 - Git: `main` stays working. Branch per lesson or feature. Commit messages say what
-  and why. Dated decisions go in `LEARNING_LOG.md`.
+  and why. Dated decisions go in `learning/LEARNING_LOG.md`.
 - Never commit `.env`, keys or `.venv/`.
 
 ## 6. Observability (from the hosted-API / API milestones on)

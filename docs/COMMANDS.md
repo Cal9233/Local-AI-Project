@@ -34,11 +34,19 @@ The packages are listed in `requirements.txt` and installed into `.venv`, which 
 
 | Task | Command | Notes |
 | --- | --- | --- |
-| Run the quote search (CLI) | `python main.py` | Asks for a part number, then reads `data/sample_quotes.csv` |
-| Run the model experiment | `python model.py` | Needs Ollama running (section 4) |
-| Run without activating the venv | `.venv/bin/python main.py` | Same result as activating first |
+| Run the quote search (CLI) | `python -m quote_assistant.main` | Asks for a part number, then reads `data/sample_quotes.csv` |
+| Run the model experiment | `python -m quote_assistant.model` | Needs Ollama running (section 4) |
+| Run without activating the venv | `.venv/bin/python -m quote_assistant.main` | Same result as activating first |
 | Open a Python shell to test ideas | `python` | Type `exit()` to leave |
-| Load a file, then stay in the shell | `python -i main.py` | Useful for calling `load_quotes(...)` by hand |
+| Load a file, then stay in the shell | `python -i -m quote_assistant.main` | Useful for calling `load_quotes(...)` by hand |
+| Build the SQLite database | `python -m quote_assistant.database` | Writes `quotes.db` in the project root (git-ignored); safe to rerun |
+| Summarize the sample email | `python -m scripts.summarize` | Uses LM Studio (Mac) |
+| Run a lesson experiment | `python experiments/hf_practice.py` | Practice code; not part of the app |
+| Run all tests | `python -m pytest tests` | Add `-q` for a short summary |
+| Lint and auto-fix | `ruff check .` / `ruff check . --fix` | Run before committing |
+| Run the extraction eval | `python -m evals.run_eval --runs 3` | `--model`, `--cases E01`, `--split dev`; see the README |
+
+Run every command from the project root. App code lives in `quote_assistant/`, so start it as a module with `-m` (`quote_assistant.main`, not `quote_assistant/main.py`). That way imports like `from quote_assistant.model import ...` resolve.
 
 ## 4. Ollama (models)
 
@@ -57,25 +65,25 @@ Note (2026-11-18): the `ollama` command was not found in this Mac's terminal. Ei
 | Show a model's details | `ollama show qwen3.5:9b` | Context length, parameters, template |
 | Unload a model from memory | `ollama stop qwen3.5:9b` | |
 | Remove a model | `ollama rm <model>` | Deletes the downloaded files |
-| Use the workstation's Ollama from Python | `OLLAMA_HOST=http://<workstation-host>:11434 python model.py` | The workstation must listen on all interfaces (next row) |
+| Use the workstation's Ollama from Python | `OLLAMA_HOST=http://<workstation-host>:11434 python -m quote_assistant.model` | The workstation must listen on all interfaces (next row) |
 | Let other machines reach this server | `OLLAMA_HOST=0.0.0.0 ollama serve` | Run this on the workstation |
 
 ## 5. API server (FastAPI + uvicorn)
 
-`api.py` is the FastAPI app; `uvicorn` is the program that runs it. In `uvicorn api:app`, `api` is the file name without `.py` and `app` is the `FastAPI()` variable inside it. The server runs until you stop it, so use a second terminal for the calls.
+`api.py` is the FastAPI app; `uvicorn` is the program that runs it. In `uvicorn quote_assistant.api:app`, `quote_assistant.api` is the module path (`quote_assistant/api.py` without `.py`) and `app` is the `FastAPI()` variable inside it. The server runs until you stop it, so use a second terminal for the calls.
 
 | Task | Command | Notes |
 | --- | --- | --- |
-| Start the server (development) | `uvicorn api:app --reload` | Restarts on every save. Serves `http://127.0.0.1:8000` |
-| Start without activating the venv | `uv run uvicorn api:app --reload` | |
-| Start on another port | `uvicorn api:app --reload --port 8001` | Use when 8000 is already taken |
-| Let other machines reach it | `uvicorn api:app --host 0.0.0.0` | Same idea as `OLLAMA_HOST=0.0.0.0` (section 4) |
+| Start the server (development) | `uvicorn quote_assistant.api:app --reload` | Restarts on every save. Serves `http://127.0.0.1:8000` |
+| Start without activating the venv | `uv run uvicorn quote_assistant.api:app --reload` | |
+| Start on another port | `uvicorn quote_assistant.api:app --reload --port 8001` | Use when 8000 is already taken |
+| Let other machines reach it | `uvicorn quote_assistant.api:app --host 0.0.0.0` | Same idea as `OLLAMA_HOST=0.0.0.0` (section 4) |
 | Stop the server | `Ctrl+C` | In the terminal running uvicorn |
 | Check that it is up | `curl http://127.0.0.1:8000/ping` | Expected: `{"status":"ok"}` |
 | Open the interactive docs | `http://127.0.0.1:8000/docs` | In a browser; try each endpoint there |
 | Search by part number (T01) | `curl "http://127.0.0.1:8000/quotes?part_number=TRAIN-PN-001"` | Quote the URL: the shell treats `?` and `&` specially |
 | Cheapest offer (T02) | `curl "http://127.0.0.1:8000/cheapest?part_number=TRAIN-PN-001&requested_quantity=1&condition=OH&currency=USD&sale_basis=OUTRIGHT"` | Add `-i` to see the status code and headers |
-| Run every contract case over HTTP | `python api_client.py` | Server must be running; prints OK or MISMATCH per case |
+| Run every contract case over HTTP | `python -m scripts.api_client` | Server must be running; prints OK or MISMATCH per case |
 | Test the API without a server | `python -m pytest tests/test_api.py` | Uses FastAPI's `TestClient` |
 
 ## 6. Git

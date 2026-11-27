@@ -2,7 +2,7 @@ import csv
 from decimal import Decimal
 from pathlib import Path
 
-file_path = Path(__file__).resolve().parent 
+file_path = Path(__file__).resolve().parent.parent  # project root
 file_dir = file_path / "data" / "sample_quotes.csv"
 
 def load_quotes(path):

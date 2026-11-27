@@ -4,26 +4,26 @@ import unittest
 from decimal import Decimal
 from pathlib import Path
 
-from database import (
+from quote_assistant.database import (
     create_db,
     filter_by_part_number_sql,
     find_cheapest_sql,
     import_quotes,
 )
-from extraction import (
+from quote_assistant.extraction import (
     ingest_email,
     phrase_in_source,
     store_extracted,
     supplier_from_email,
 )
-from main import (
+from quote_assistant.main import (
     file_dir,
     filter_by_part_number,
     find_cheapest_eligible_quote,
     load_quotes,
     validate_request,
 )
-from model import Quote
+from quote_assistant.model import Quote
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 CONTRACT_PATH = DATA_DIR / "expected_results.json"

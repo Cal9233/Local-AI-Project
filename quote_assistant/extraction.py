@@ -10,8 +10,8 @@ from collections.abc import Callable
 from decimal import Decimal
 from pathlib import Path
 
-from database import insert_extracted_quote, insert_review_quote
-from model import PriceBasis, Quote
+from quote_assistant.database import insert_extracted_quote, insert_review_quote
+from quote_assistant.model import PriceBasis, Quote
 
 CENTS = Decimal("0.01")
 SUPPORTED_CURRENCIES = {"USD", "EUR"}

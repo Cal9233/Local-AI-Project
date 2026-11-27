@@ -1,6 +1,6 @@
 import lmstudio as lms
 
-from config import BASE_DIR, LLM_MODEL
+from quote_assistant.config import BASE_DIR, LLM_MODEL
 
 EMAIL_PATH = BASE_DIR / "data" / "sample_email.txt"
 SUMMARY_PROMPT_V1 = """You are summarizing emails from supplier for Genthrust.

@@ -1,7 +1,7 @@
 """Call the running API as a client (httpx) and compare with the contract.
 
-Start the server first:  uvicorn api:app
-Then:                    uv run python api_client.py
+Start the server first:  uvicorn quote_assistant.api:app
+Then:                    uv run python -m scripts.api_client
 """
 
 import json
@@ -10,7 +10,7 @@ from pathlib import Path
 import httpx
 
 BASE_URL = "http://127.0.0.1:8000"
-CONTRACT = Path(__file__).resolve().parent / "data" / "expected_results.json"
+CONTRACT = Path(__file__).resolve().parent.parent / "data" / "expected_results.json"
 
 
 def main() -> None:

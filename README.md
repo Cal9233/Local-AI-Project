@@ -4,23 +4,36 @@ A learning project: a command-line assistant that imports supplier quotes, finds
 
 The main goal is to learn to write, debug, explain, and evaluate AI-powered business software independently. See `docs/PROJECT_BRIEF.md` for the full brief.
 
+## Layout
+
+```
+quote_assistant/   application package: main.py (rules + CLI), database.py + schema.sql,
+                   extraction.py, model.py (model adapter), api.py (HTTP), config.py
+scripts/           helper tools: api_client.py, summarize.py
+experiments/       lesson practice that is not app code (e.g. 12.1 Hugging Face)
+tests/  evals/  data/  docs/  learning/
+```
+
+Run everything from the project root as modules (`python -m quote_assistant.main`,
+`uvicorn quote_assistant.api:app`, `python -m evals.run_eval`).
+
 ## Current behavior
 
-`main.py` asks for a part number and prints every matching quote from `data/sample_quotes.csv`, or a single "No quotes found" message.
+`quote_assistant/main.py` asks for a part number and prints every matching quote from `data/sample_quotes.csv`, or a single "No quotes found" message.
 
 ## Setup
 
 ```bash
 uv venv --python 3.12
 source .venv/bin/activate
-python main.py
+python -m quote_assistant.main
 ```
 
 ```bash
 uv pip install -r requirements.txt   # packages added so far; later stages add more
 ```
 
-External packages are added by stage and recorded in `requirements.txt`. `model.py` holds the first model experiments (the brief calls it `model_practice.py`).
+External packages are added by stage and recorded in `requirements.txt`. `quote_assistant/model.py` holds the first model experiments (the brief calls it `model_practice.py`).
 
 ## Evals and model comparison
 
@@ -37,7 +50,7 @@ Results go to `evals/results/`. The comparison write-up is `docs/MODEL_COMPARISO
 
 ## Configuration
 
-`config.py` loads `.env.linux` or `.env.mac` (see `.env.example`): `MODEL_HOST`, `MODEL`.
+`quote_assistant/config.py` loads `.env.linux` or `.env.mac` (see `.env.example`): `MODEL_HOST`, `MODEL`.
 The hosted provider reads `ANTHROPIC_API_KEY` from the environment. Never put it in code or git.
 
 ## Tests

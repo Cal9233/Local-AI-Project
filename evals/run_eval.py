@@ -23,10 +23,20 @@ from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
-from config import LLM_MODEL
-from database import create_db
-from extraction import CENTS, store_extracted, supplier_from_email, unit_price
-from model import PROMPT_VERSION, TIMEOUT, Quote, extract_quotes_with_reply
+from quote_assistant.config import LLM_MODEL
+from quote_assistant.database import create_db
+from quote_assistant.extraction import (
+    CENTS,
+    store_extracted,
+    supplier_from_email,
+    unit_price,
+)
+from quote_assistant.model import (
+    PROMPT_VERSION,
+    TIMEOUT,
+    Quote,
+    extract_quotes_with_reply,
+)
 
 EVALS_DIR = Path(__file__).resolve().parent
 # USD per million tokens (input, output), Anthropic first-party list prices, 2026-11.

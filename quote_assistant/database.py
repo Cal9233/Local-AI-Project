@@ -3,8 +3,9 @@ import sqlite3
 from decimal import Decimal
 from pathlib import Path
 
-table_schema = Path("schema.sql").read_text()
-quotes_dir = Path("data/sample_quotes.csv")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+table_schema = (Path(__file__).resolve().parent / "schema.sql").read_text()
+quotes_dir = PROJECT_ROOT / "data" / "sample_quotes.csv"
 
 def load_quotes(path):
     with open(path, "r") as file:
@@ -96,7 +97,7 @@ def find_cheapest_sql(conn, request):
 
 
 def main():
-    conn = sqlite3.connect("quotes.db")
+    conn = sqlite3.connect(PROJECT_ROOT / "quotes.db")
     create_db(conn)
     import_quotes(conn, quotes_dir)
 
