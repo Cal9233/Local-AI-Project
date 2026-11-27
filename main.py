@@ -1,6 +1,6 @@
 import csv
-from pathlib import Path 
 from decimal import Decimal
+from pathlib import Path
 
 file_path = Path(__file__).resolve().parent 
 file_dir = file_path / "data" / "sample_quotes.csv"
@@ -25,7 +25,7 @@ def filter_by_part_number(quotes, part_number):
 def validate_request(request):
     qty = request["requested_quantity"]
     if not isinstance(qty, int):
-        raise ValueError(f"requested_quantity must be a whole number, got {qty!r}")
+        raise TypeError(f"requested_quantity must be a whole number, got {qty!r}")
     if qty < 1:
         raise ValueError(f"requested_quantity must be at least 1, got {qty}")
 
