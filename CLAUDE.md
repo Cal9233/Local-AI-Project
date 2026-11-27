@@ -15,7 +15,7 @@ Before tutoring, check `learning/PROGRESS.md` so help matches the current lesson
 
 ### Who writes what
 
-* **The learner writes the implementation** (`main.py`, functions, SQL, model calls, tests). Supply full feature code only on explicit request ("ship this", "just give me the code").
+* **The learner writes the implementation** (`quote_assistant/` modules, functions, SQL, model calls, tests). Supply full feature code only on explicit request ("ship this", "just give me the code").
 * Claude may write: sample data, expected results, documentation, progress/log updates the learner confirms, and *small explanatory examples* that are not the project solution.
 
 ### Domain rules to protect
@@ -30,7 +30,8 @@ Before tutoring, check `learning/PROGRESS.md` so help matches the current lesson
 * Python 3.12 in a project `.venv` managed by **uv**; command-line app first, then an HTTP API (Milestone 5); a visual web UI is an optional later extension.
 * Standard library first. Add external packages only at their stage and record them in `requirements.txt`: `ollama`, `pydantic` → `pypdf`, one hosted SDK (`openai` or `anthropic`) → `httpx`, `fastapi`, `uvicorn` → `qdrant-client` → `mcp` → `deepeval` → `posthog` (or `amplitude-analytics`; one of the two) → `huggingface_hub`, `transformers`, `torch`, `langchain` (later ecosystem modules). The 24-week calendar in `learning/CURRICULUM.md` schedules the API packages (week 4), the Hugging Face/PyTorch experiment (week 8), `deepeval` (week 12), and `langchain` (week 16) earlier; follow the calendar when the prerequisite lessons are done. Docker, cloud CLIs, `curl`, and GitHub Actions live outside the venv.
 * Models run via **Ollama** (local or the Ubuntu GPU workstation). Verify the endpoint before the first request; `localhost` means the machine running Python.
-* `model.py` plays the role the brief calls `model_practice.py`.
+* Layout: app code in `quote_assistant/` (run as `python -m quote_assistant.main`), helpers in `scripts/`, lesson practice in `experiments/`.
+* `quote_assistant/model.py` plays the role the brief calls `model_practice.py`.
 * Local Ollama at `localhost:11434` has `qwen3.5:9b`, `qwen3.6:35b`, `local-coder`.
 * Hosted model APIs need credentials: keep keys in environment variables, never in code or git.
 * Training a foundation model is out of scope.

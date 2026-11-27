@@ -11,7 +11,7 @@ from typing import Annotated
 
 from fastapi import FastAPI, HTTPException, Query
 
-from main import (
+from quote_assistant.main import (
     file_dir,
     filter_by_part_number,
     find_cheapest_eligible_quote,

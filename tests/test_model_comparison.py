@@ -10,9 +10,9 @@ from unittest.mock import patch
 
 import httpx
 
-import model
 from evals import run_eval
-from model import ModelReply, extract_quotes
+from quote_assistant import model
+from quote_assistant.model import ModelReply, extract_quotes
 
 EMPTY_REPLY = '{"quote_list": []}'
 
@@ -29,22 +29,22 @@ class TestModelSelectionWiring(unittest.TestCase):
     def test_extract_quotes_passes_model_to_ask_model(self):
         # Regression test: extract_quotes once logged the chosen model but called
         # ask_model without it, so every "--model qwen3.6:35b" run really used the default.
-        with patch("model.ask_model", return_value=fake_reply("test-model")) as fake:
+        with patch("quote_assistant.model.ask_model", return_value=fake_reply("test-model")) as fake:
             extract_quotes("any email text", llm_model="test-model")
         fake.assert_called_once()
         self.assertIn("test-model", fake.call_args.args + tuple(fake.call_args.kwargs.values()))
 
     def test_run_case_passes_model_through(self):
         case = {"id": "E09", "file": "emails/E09.txt", "split": "dev", "records": []}
-        with patch("model.ask_model", return_value=fake_reply("other-model")) as fake:
+        with patch("quote_assistant.model.ask_model", return_value=fake_reply("other-model")) as fake:
             run_eval.run_case(case, "other-model")
         self.assertIn("other-model", fake.call_args.args)
 
 
 class TestProviderRouting(unittest.TestCase):
     def test_claude_models_go_to_anthropic(self):
-        with patch("model._ask_anthropic", return_value=fake_reply("claude-opus-5-5")) as hosted, \
-             patch("model.Client") as ollama_client:
+        with patch("quote_assistant.model._ask_anthropic", return_value=fake_reply("claude-opus-5-5")) as hosted, \
+             patch("quote_assistant.model.Client") as ollama_client:
             model.ask_model("text", llm_model="claude-opus-5-5")
         hosted.assert_called_once()
         ollama_client.assert_not_called()
@@ -56,13 +56,13 @@ class TestProviderRouting(unittest.TestCase):
 
 class TestTimeouts(unittest.TestCase):
     def test_timeout_value_reaches_ask_model(self):
-        with patch("model.ask_model", return_value=fake_reply()) as fake:
+        with patch("quote_assistant.model.ask_model", return_value=fake_reply()) as fake:
             extract_quotes("text", llm_model="m", timeout=1.5)
         self.assertIn(1.5, fake.call_args.args)
 
     def test_timeout_is_recorded_as_an_error_not_a_result(self):
         case = {"id": "E09", "file": "emails/E09.txt", "split": "dev", "records": []}
-        with patch("model.ask_model", side_effect=httpx.ReadTimeout("timed out")):
+        with patch("quote_assistant.model.ask_model", side_effect=httpx.ReadTimeout("timed out")):
             r = run_eval.run_case(case, "m", timeout=0.01)
         self.assertIn("ReadTimeout", r["error"])
         self.assertNotIn("extracted", r)  # no invented records when the call failed

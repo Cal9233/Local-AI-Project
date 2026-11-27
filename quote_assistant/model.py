@@ -10,7 +10,7 @@ import lmstudio as lms
 from ollama import ChatResponse, Client, ResponseError
 from pydantic import BaseModel, Field, ValidationError
 
-from config import LLM_MODEL, LLM_MODEL_HOST, OS_NAME
+from quote_assistant.config import LLM_MODEL, LLM_MODEL_HOST, OS_NAME
 
 logger = logging.getLogger(__name__)
 

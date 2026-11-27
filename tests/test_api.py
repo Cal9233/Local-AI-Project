@@ -6,7 +6,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from api import app
+from quote_assistant.api import app
 
 CONTRACT = Path(__file__).resolve().parent.parent / "data" / "expected_results.json"
 CASES = {c["id"]: c for c in json.loads(CONTRACT.read_text())["test_cases"]}
