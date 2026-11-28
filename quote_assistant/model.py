@@ -11,6 +11,7 @@ from ollama import ChatResponse, Client, ResponseError
 from pydantic import BaseModel, Field, ValidationError
 
 from quote_assistant.config import LLM_MODEL, LLM_MODEL_HOST, OS_NAME
+from quote_assistant.errors import ExtractionError
 
 logger = logging.getLogger(__name__)
 
@@ -238,7 +239,8 @@ def extract_quotes_with_reply(
     """Extract every offer in one email with SYSTEM_PROMPT_V3; also return the raw reply and stats.
 
     Raises:
-        pydantic.ValidationError: the reply does not match QuoteWrapper.
+        ExtractionError: the reply does not match QuoteWrapper (the pydantic
+            ValidationError is kept as __cause__).
         Transport errors from ask_model (timeouts, server errors).
     """
     start = time.perf_counter()
@@ -251,7 +253,13 @@ def extract_quotes_with_reply(
         reply.input_tokens, reply.output_tokens, reply.thinking_chars,
         f"{tps:.1f}" if tps else None,
     )
-    return QuoteWrapper.model_validate_json(reply.content).quote_list, reply
+    try:
+        quotes = QuoteWrapper.model_validate_json(reply.content).quote_list
+    except ValidationError as err:
+        raise ExtractionError(
+            f"{reply.model} reply did not match QuoteWrapper (prompt {PROMPT_VERSION})"
+        ) from err
+    return quotes, reply
 
 
 def extract_quotes(email_text: str, llm_model: str = LLM_MODEL, timeout: float = TIMEOUT) -> list[Quote]:
@@ -261,7 +269,7 @@ def extract_quotes(email_text: str, llm_model: str = LLM_MODEL, timeout: float =
         The validated quotes (empty if the email makes no offer).
 
     Raises:
-        pydantic.ValidationError: the reply does not match QuoteWrapper.
+        ExtractionError: the reply does not match QuoteWrapper.
         httpx.TimeoutException / ollama.ResponseError: transport failures.
     """
     quotes, _ = extract_quotes_with_reply(email_text, llm_model, timeout)

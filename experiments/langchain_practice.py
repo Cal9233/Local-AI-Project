@@ -1,0 +1,37 @@
+from langchain_ollama import ChatOllama
+from quote_assistant.model import QuoteWrapper, SYSTEM_PROMPT_V3
+
+llm = ChatOllama(
+    model='qwen3.6:35b',
+    temperature=0
+)
+
+messages = [
+    (
+        "system", 
+        SYSTEM_PROMPT_V3
+    ),
+    ("human", """From: sales@contoso-aero.example
+Subject: RE: RFQ 2026-1187 / TRAIN-PN-007
+
+Hi,
+
+Following up on your RFQ for TRAIN-PN-007. We have 2 EA in stock, overhauled
+condition with fresh 8130-3 tags. Price is USD 9,850.00 each, outright. A third
+unit is in the shop and should be ready in about 3 weeks at the same price.
+
+If an exchange works better, we can offer one unit on exchange at USD 4,200.00
+plus core return within 15 days. Core charge is USD 6,500.00 if the core is not
+returned or is beyond economical repair.
+
+Quote valid for 30 days. Ships from Miami, FCA.
+
+Best regards,
+Dana
+Contoso Aero Parts (fictional)
+""")
+]
+
+structured_llm = llm.with_structured_output(QuoteWrapper)
+result = structured_llm.invoke(messages)
+print(result)

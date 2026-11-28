@@ -9,9 +9,11 @@ from decimal import Decimal
 from unittest.mock import patch
 
 import httpx
+from pydantic import ValidationError
 
 from evals import run_eval
 from quote_assistant import model
+from quote_assistant.errors import ExtractionError
 from quote_assistant.model import ModelReply, extract_quotes
 
 EMPTY_REPLY = '{"quote_list": []}'
@@ -86,6 +88,20 @@ class TestCostAndStats(unittest.TestCase):
     def test_results_filename_is_safe_and_names_the_model(self):
         name = run_eval.results_filename(datetime(2026, 11, 26, 18, 0, 0), "qwen3.6:35b", "V2")
         self.assertEqual(name, "2026-11-26T180000_qwen3.6-35b_V2.json")
+
+
+class TestBadModelReply(unittest.TestCase):
+    """A reply that fails QuoteWrapper surfaces as ExtractionError, whatever library parsed it."""
+
+    def test_bad_reply_raises_extraction_error(self):
+        bad = fake_reply("test-model", '{"quote_list": [{"part_number": "X"}]}')
+        with (
+            patch("quote_assistant.model.ask_model", return_value=bad),
+            self.assertRaises(ExtractionError) as ctx,
+        ):
+            extract_quotes("any email text", llm_model="test-model")
+        # `from err` keeps the pydantic error, so the failing field is still traceable.
+        self.assertIsInstance(ctx.exception.__cause__, ValidationError)
 
 
 if __name__ == "__main__":

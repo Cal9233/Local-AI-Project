@@ -89,3 +89,17 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **Symptom:** ran the logits-shape and padding experiments before committing to a guess (twice).
 - **Corrected understanding:** the prediction is the practice; running first turns it into reading answers.
 - **Rule going forward:** write the guess down first, then run.
+
+## 2026-11-28 — Thought a schema rule could catch an over-stated quantity (Lesson 12.2)
+
+- **Symptom:** For a quote with quantity 3 from an email saying 2 in stock (third unit "in about 3 weeks"), proposed a schema rule as the fix.
+- **My original explanation:** A schema rule would catch the wrong quantity.
+- **Corrected understanding:** Trying to write the `Field` constraint showed the schema never sees the email, so it has no number to compare against. Matching the source is a code check (like `price_phrase` + `phrase_in_source`). Same family as 4.4: valid structure ≠ true values.
+- **Rule going forward:** If the check needs the source text, it belongs in code, not the schema.
+
+## 2026-11-28 — Assumed the production extractor retries (Lesson 12.2)
+
+- **Symptom:** Said `extract_quotes` retries once and then flags for review.
+- **My original explanation:** The retry-then-flag behaviour applies to the extraction pipeline.
+- **Corrected understanding:** Tracing `extract_quotes` → `extract_quotes_with_reply` → `ask_model` showed one attempt that raises `pydantic.ValidationError`; the retry loop and "Flag for review" live only in the 2.x `main()` demo.
+- **Rule going forward:** Read the function before predicting it (repeat of the 3.3 rule).

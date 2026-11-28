@@ -37,3 +37,22 @@ torch==2.15.0
 transformers==5.24.1
 accelerate==1.16.0
 psutil==7.2.2
+# LangChain (lesson 12.2): rebuild the extraction adapter in LangChain to compare with model.py.
+# langchain-ollama is the one we import; the rest are langchain-core / langsmith dependencies,
+# pinned for a repeatable install.
+langchain-ollama==1.2.0
+charset-normalizer==3.5.3
+distro==1.9.0
+jsonpatch==1.48
+jsonpointer==3.12
+langchain-core==1.8.5
+langchain-protocol==0.0.22
+langsmith==0.16.2
+orjson==3.13.0
+requests==2.34.2
+requests-toolbelt==1.0.0
+tenacity==9.2.1
+uuid-utils==0.20.0
+websockets==17.4
+xxhash==4.1.0
+zstandard==0.25.0
