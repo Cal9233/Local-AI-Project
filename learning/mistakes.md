@@ -84,3 +84,8 @@ Record meaningful bugs or recurring misconceptions. Preserve the original reason
 - **My original explanation:** Asked what part number had to do with the quantity value; thought `= None` defaults were involved.
 - **Corrected understanding:** An unquoted name in a dict literal is a variable, so its value becomes the key (`{"TRAIN-PN-001": ...}`). The KeyError names whichever key is looked up first.
 - **Rule going forward:** Dict keys in quotes unless you mean a variable; on a KeyError, `print` the dict and compare its keys.
+
+## 2026-11-27 — Ran code before predicting (Lesson 12.1)
+- **Symptom:** ran the logits-shape and padding experiments before committing to a guess (twice).
+- **Corrected understanding:** the prediction is the practice; running first turns it into reading answers.
+- **Rule going forward:** write the guess down first, then run.
