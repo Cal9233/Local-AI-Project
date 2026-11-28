@@ -40,3 +40,4 @@ Dated milestones, decisions, and open questions. Detailed entries live in `learn
 
 ## 2026-11-27
 - Completed 5 (HTTP API): same rule functions behind CLI and API; learned that "required" and "in the path" are separate choices, and that business rules raise Python errors which each interface translates (ValueError → 400).
+- Completed 12.1 (run a model directly): digits and capitalized words become separate tokens, a further reason exact matching and arithmetic stay in Python; inference reads weights, training updates them from loss.

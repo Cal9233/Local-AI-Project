@@ -4,7 +4,7 @@ Status of each lesson in `learning/CURRICULUM.md`. Update through `/checkpoint` 
 
 Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 
-**Current lesson:** 12.1 — Run a model directly (Hugging Face, PyTorch), the remaining weeks 5–8 item (3.3 still deferred). Default model is now `qwen3.6:35b` with prompt V3.
+**Current lesson:** 4.3 — Text-based PDFs (calendar weeks 9–12: 4.3, 6, 8; 3.3 still deferred). Default model is `qwen3.6:35b` with prompt V3.
 
 ## Milestone 0 — Workstation setup
 - [x] 0.1 Environment on this Linux machine — 2026-11-12: `.venv` created with uv on Python 3.12.16 (set up by Claude on request; system `python3` is 3.14, so activate the venv). Review: explain why the two interpreters differ.
@@ -61,7 +61,7 @@ Legend: `[x]` done · `[~]` in progress · `[ ]` not started
 - [ ] 11 Telemetry and cost
 
 ## Milestone 12 — Ecosystem modules and demonstration
-- [ ] 12.1 Run a model directly (Hugging Face, PyTorch)
+- [x] 12.1 Run a model directly (Hugging Face, PyTorch) — 2026-11-27: `experiments/hf_practice.py` tokenizes quote strings, input_ids [1,16] → logits [1,16,151936]; padding/attention mask explained; model card: Apache 2.0, ~0.5B params, ~1 GB, CPU-capable.
 - [ ] 12.2 LangChain comparison and demonstration
 
 ## Milestone 13 — Portfolio and interviews
